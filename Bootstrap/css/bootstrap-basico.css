@@ -1,0 +1,41 @@
+.caja{
+    min-height: 60px; /* Tamaño mínimo: para que se se pueda estirar si necesita*/
+}
+
+.caja-pequenna{
+    height: 20px;
+}
+
+.amarillo{
+    background-color: yellow;
+}
+
+.verde{
+    background-color: green;
+}
+
+.rojo{
+    background-color: red;
+}
+
+.azul{
+    background-color: blue;
+}
+.morado{
+    background-color: blueviolet;
+}
+
+.gris{
+    background-color: rgb(215, 212, 215);
+    height: 200px;
+    border: 2px solid black;
+}
+
+.celeste{
+    background-color: rgb(151, 188, 230);
+    height: 400px;
+}
+
+.fila-contenedores{
+    height: 400px;
+}

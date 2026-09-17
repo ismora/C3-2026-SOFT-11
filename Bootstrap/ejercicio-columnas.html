@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio de rilas y columnas en Bootstrap</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/bootstrap-basico.css">
+</head>
+<body>
+
+    <main class="container">
+        <div class="row"> <!--Fila 1 -->
+            <div class="col-12 caja amarillo">
+                <p> col-12</p>
+            </div>
+        </div>
+
+        <div class="row"> <!--Fila 2 -->
+            <div class="col-2 caja verde">
+                <p> col-2</p>
+            </div>
+
+            <div class="col-10 caja celeste"> 
+                <div class="row d-flex justify-content-around align-items-center fila-contenedores">
+                    <div class="col-3 caja gris"></div>
+                    <div class="col-3 caja gris"></div>
+                    <div class="col-3 caja gris"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    
+</body>
+</html>
