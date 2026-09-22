@@ -1,0 +1,118 @@
+/* Diseño de referencia: https://xd.adobe.com/view/2a361805-1952-471d-8974-41569309217f-7f65/screen/d18f23e4-dc15-4744-bed9-bc904681bcc5/specs/ */
+:root {
+    --blanco: #FFFFFF;
+    --azulClaro: #3E578E;
+    --azul: #184E97;
+    --azulOscuro: #11294A;
+    --grisClaro: #ECF0F1;
+    --gris: #D6DBDF;
+    --grisOscuro: #464646;
+    --turquesa: #0DBEB0;
+    --negro: #121212;
+    --negroClaro: #282828;
+}
+
+
+.logo small{
+    font-size: 10px;
+    display: block;
+    margin-top: -4px;
+}
+
+.topbar {
+    height: 75px;
+    background-color: var(--azul);
+    color: var(--blanco);
+    position: relative;
+    /* Para a futuro colocar elementos superpuestos, como la bolita roja de notificación */
+    border-bottom: 7px solid var(--turquesa);
+    /* Línea inferior decorativa */
+}
+
+.topbar i {
+    /* Iconos de fontawesome blancos */
+    color: var(--blanco);
+}
+
+.cambio-fuente{
+    font-size: 18px;
+}
+
+body{
+    background-color: var(--grisClaro);
+}
+
+/* Barra lateral */
+.sidebar {
+    background-color: var(--blanco);
+    border-right: 1px solid var(--azulOscuro);
+    min-height: calc(100vh - 56px);
+}
+
+.role-box {
+    background-color: var(--azulOscuro);
+    color: var(--blanco);
+    font-size: 14px;
+    height: 42px;
+}
+
+.btn-nueva-politica {
+    background-color: var(--azulClaro);
+    color: var(--blanco);
+    font-size: 18px;
+}
+
+.btn-nueva-politica:hover {
+    background-color: var(--azul);
+    color: var(--blanco);
+}
+
+.btn-ver-politicas{
+    background-color: var(--grisClaro);
+    display: block;
+    margin: 0 auto;
+}
+
+.list-politicas li:not(:last-child) {
+    border-bottom: 1px solid var(--gris);
+    padding: 10px 1rem 10px 1rem;   
+    margin: 10px -1rem 10px -1rem;  
+    /*El padre de la lista tiene p-3 de Bootstrap (.p-3 = padding: 1rem; aprox. 8px)
+    10px 1rem 10px 1rem; == top right bottom left; == top: 10px right: 1rem bottom: 10px left: 1rem
+    Con el margin negativo se saca el li 1rem hacia afuera.
+    Con el padding interno se compensa para que el texto no se desalineé.
+    Y el borde ocupa todo el ancho.
+  */
+    margin-bottom: 10px;
+}
+
+.list-politicas a{
+    color: var(--grisOscuro);
+}
+
+
+.svg-usuario{
+    width: 200px;
+    fill: var(--grisOscuro);
+    opacity: 0.15;
+}
+
+.card-option{
+    background: var(--blanco);
+    border-radius: 14px;
+    width: 157px;
+    height: 166px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-number{
+    background: var(--azulOscuro);
+    color: var(--blanco);
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+}
+
