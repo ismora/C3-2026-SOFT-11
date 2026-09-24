@@ -1,0 +1,753 @@
+<!-- Bootstrap  -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Sistema de Gestión de Censos Escolares | MEP</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tema -->
+     <link rel="stylesheet" href="css/minty.css">
+</head>
+
+<body class="bg-light">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+
+        <div class="container-fluid">
+
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-success mx-4" href="#inicio">
+
+                <span class="bg-success bg-opacity-75 text-white rounded p-2">
+                    <i class="fa-solid fa-school"></i>
+                </span>
+
+                <span>
+                    SICEN
+                    <small class="d-block text-secondary fw-normal" style="font-size: 10px;">
+                        Gestion de censos escolares
+                    </small>
+
+                </span>
+
+            </a>
+
+            <!-- Botón menú de hamburguesa -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <div class="collapse navbar-collapse" id="menu">
+
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">
+                            Inicio
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#funcionalidades">
+                            Ciclo del censo
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#proceso">
+                            Proceso
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#acceso" class="btn btn-success btn-sm px-3">
+                            <i class="fa-solid fa-right-to-bracket me-1"></i>
+                            Ingresar
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+
+
+    <main>
+        <section id="inicio" class="bg-success-subtle py-5">
+
+            <div class="container-fluid">
+
+                <div class="row align-items-center d-flex justify-content-between mx-4">
+
+                    <div class="col-6">
+                        <h1 class="fw-bold display-5">
+                            Gestión de
+                            <span class="text-success">
+                                censos escolares
+                            </span>
+
+                        </h1>
+
+                        <p class="text-secondary mb-4">
+                            Plataforma para registrar, validar y dar seguimiento a la información estadística de los
+                            centros educativos.
+                        </p>
+                    </div>
+
+                    <div class="col-4 m-3">
+
+                        <div class="card border-0 shadow-sm">
+
+                            <div class="card-body">
+
+                                <p class="d-flex justify-content-between
+                                    align-items-center mb-3">
+                                    <strong>
+                                        <i class="fa-solid fa-chart-line text-success me-2"> </i>
+                                        Panel de seguimiento
+                                    </strong>
+                                </p>
+
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <div class="bg-light rounded p-3">
+                                            <p class="text-secondary m-0">
+                                                Centros educativos
+                                            </p>
+
+                                            <p class="fs-4 fw-bold m-0">
+                                                512
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-6">
+                                        <div class="bg-light rounded p-3">
+                                            <p class="text-secondary m-0">
+                                                Censos aceptados
+                                            </p>
+
+                                            <p class="fs-4 fw-bold text-success m-0">
+                                                78%
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="mt-3">
+
+                                    <div class="d-flex justify-content-between mb-1">
+
+                                        <p class="text-secondary m-0">
+                                            Avance general
+                                        </p>
+
+                                        <p class="fw-bold m-0">
+                                            78%
+                                        </p>
+
+                                    </div>
+
+                                    <div class="progress">
+
+                                        <div class="progress-bar bg-success w-75"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FUNCIONALIDADES -->
+
+        <section id="funcionalidades" class="py-5">
+
+            <div class="container">
+
+                <div class="text-center mb-4">
+
+                    <h2 class="fw-bold mt-2">
+                        Herramientas
+                    </h2>
+
+                    <p class="text-secondary mb-0">
+                        Herramientas para configurar, registrar, validar y consultar información.
+                    </p>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="bg-success-subtle text-success rounded p-2 d-inline-block mb-3"
+                                    aria-hidden="true">
+                                    <i class="fa-solid fa-file-circle-plus"></i>
+                                </div>
+
+                                <h3 class="h6 fw-bold">
+                                    Formularios censales
+                                </h3>
+
+                                <p class="small text-secondary mb-0">
+                                    Creación y actualización de formularios para recopilar información.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="bg-success-subtle text-success rounded p-2 d-inline-block mb-3"
+                                    aria-hidden="true">
+                                    <i class="fa-solid fa-sliders"></i>
+                                </div>
+
+                                <h3 class="h6 fw-bold">
+                                    Configuración
+                                </h3>
+
+                                <p class="small text-secondary mb-0">
+                                    Definición de fechas, formularios y condiciones del censo.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="bg-success-subtle text-success rounded p-2 d-inline-block mb-3"
+                                    aria-hidden="true">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </div>
+
+                                <h3 class="h6 fw-bold">
+                                    Roles y permisos
+                                </h3>
+
+                                <p class="small text-secondary mb-0">
+                                    Administración de usuarios y permisos
+                                    según responsabilidades.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="bg-success-subtle text-success rounded p-2 d-inline-block mb-3"
+                                    aria-hidden="true">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </div>
+
+                                <h3 class="h6 fw-bold">
+                                    Seguimiento y validación
+                                </h3>
+
+                                <p class="small text-secondary mb-0">
+                                    Revisión, aceptación y subsanación
+                                    de formularios.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="bg-success-subtle text-success rounded p-2 d-inline-block mb-3"
+                                    aria-hidden="true">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </div>
+
+                                <h3 class="h6 fw-bold">
+                                    Reportes
+                                </h3>
+
+                                <p class="small text-secondary mb-0">
+                                    Indicadores para conocer
+                                    el avance de los censos.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="bg-success-subtle text-success rounded p-2 d-inline-block mb-3"
+                                    aria-hidden="true">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </div>
+
+                                <h3 class="h6 fw-bold">
+                                    Notificaciones
+                                </h3>
+
+                                <p class="small text-secondary mb-0">
+                                    Alertas sobre avances, estados
+                                    y correcciones.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROCESO -->
+
+        <section id="proceso" class="bg-white py-5">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold mt-2">
+                        Proceso del censo
+                    </h2>
+                </div>
+
+                <div class="row g-3 text-center">
+                    <div class="col-2 d-flex align-items-center flex-column">
+                        <p
+                            class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center w-50 h-50 m-2 p-3">
+                            <strong>01</strong>
+                        </p>
+                        <p class="fw-bold">
+                            Configurar
+                        </p>
+                    </div>
+
+                    <div class="col-2 d-flex align-items-center flex-column">
+                        <p
+                            class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center w-50 h-50 m-2 p-3">
+                            <strong>02</strong>
+                        </p>
+                        <p class="fw-bold">
+                            Abrir
+                        </p>
+                    </div>
+
+                    <div class="col-2 d-flex align-items-center flex-column">
+                        <p
+                            class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center w-50 h-50 m-2 p-3">
+                            <strong>03</strong>
+                        </p>
+                        <p class="fw-bold">
+                            Registrar
+                        </p>
+                    </div>
+
+                    <div class="col-2 d-flex align-items-center flex-column">
+                        <p
+                            class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center w-50 h-50 m-2 p-3">
+                            <strong>04</strong>
+                        </p>
+                        <p class="fw-bold">
+                            Revisar
+                        </p>
+                    </div>
+
+                    <div class="col-2 d-flex align-items-center flex-column">
+                        <p
+                            class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center w-50 h-50 m-2 p-3">
+                            <strong>05</strong>
+                        </p>
+                        <p class="fw-bold">
+                            Subsanar
+                        </p>
+                    </div>
+
+                    <div class="col-2 d-flex align-items-center flex-column">
+                        <p
+                            class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center w-50 h-50 m-2 p-3">
+                            <strong>06</strong>
+                        </p>
+                        <p class="fw-bold">
+                            Aceptar
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ETAPAS DEL CENSO -->
+
+        <section id="etapas" class="py-5">
+            <div class="container">
+
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold mt-2">
+                        Gestión integral del censo
+                    </h2>
+
+                    <p class="text-secondary mb-0">
+                        El sistema acompaña cada etapa del proceso, desde su configuración hasta la validación de la
+                        información.
+                    </p>
+                </div>
+
+                <div class="row g-3">
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="bg-success-subtle text-success rounded p-2 me-3">
+                                        <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+                                    </span>
+
+                                    <h3 class="h5 fw-bold mb-0">
+                                        Configuración
+                                    </h3>
+                                </div>
+
+                                <p class="small text-secondary">
+                                    Prepare cada censo de acuerdo con las necesidades institucionales.
+                                </p>
+
+                                <ul class="list-unstyled small mb-0">
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Crear y actualizar formularios
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Definir preguntas e instructivos
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Asociar ofertas educativas
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Definir fechas y flujo de aprobación
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </article>
+                    </div>
+
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="bg-success-subtle text-success rounded p-2 me-3">
+                                        <i class="fa-solid fa-file-pen" aria-hidden="true"></i>
+                                    </span>
+
+                                    <h3 class="h5 fw-bold mb-0">
+                                        Levantamiento
+                                    </h3>
+                                </div>
+
+                                <p class="small text-secondary">
+                                    Facilite a los centros educativos el registro de información.
+                                </p>
+
+                                <ul class="list-unstyled small mb-0">
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Datos precargados
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Formularios digitales
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Instructivos disponibles
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Envío de información
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </article>
+                    </div>
+
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="bg-success-subtle text-success rounded p-2 me-3">
+                                        <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+                                    </span>
+
+                                    <h3 class="h5 fw-bold mb-0">
+                                        Validación
+                                    </h3>
+                                </div>
+
+                                <p class="small text-secondary">
+                                    Revise, dé seguimiento y valide la información registrada.
+                                </p>
+
+                                <ul class="list-unstyled small mb-0">
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Seguimiento por estado
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Solicitud de subsanaciones
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Historial auditable
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Aceptación de formularios
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </article>
+                    </div>
+
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="bg-success-subtle text-success rounded p-2 me-3">
+                                        <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                                    </span>
+
+                                    <h3 class="h5 fw-bold mb-0">
+                                        Seguimiento
+                                    </h3>
+                                </div>
+
+                                <p class="small text-secondary">
+                                    Conozca el avance de los centros educativos incluidos en cada censo.
+                                </p>
+
+                                <ul class="list-unstyled small mb-0">
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Días transcurridos y restantes
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Estado general del censo
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Centros por estado
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Cortes de matrícula censal
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </article>
+                    </div>
+
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="bg-success-subtle text-success rounded p-2 me-3">
+                                        <i class="fa-solid fa-bell" aria-hidden="true"></i>
+                                    </span>
+
+                                    <h3 class="h5 fw-bold mb-0">
+                                        Comunicación
+                                    </h3>
+                                </div>
+
+                                <p class="small text-secondary">
+                                    Mantenga informados a los responsables durante el proceso.
+                                </p>
+
+                                <ul class="list-unstyled small mb-0">
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Alertas sobre el estado
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Comunicados institucionales
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Avisos de subsanación
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Notificaciones del proceso
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </article>
+                    </div>
+
+
+                    <div class="col-4">
+                        <article class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="bg-success-subtle text-success rounded p-2 me-3">
+                                        <i class="fa-solid fa-chart-column" aria-hidden="true"></i>
+                                    </span>
+
+                                    <h3 class="h5 fw-bold mb-0">
+                                        Información y reportes
+                                    </h3>
+                                </div>
+
+                                <p class="small text-secondary">
+                                    Transforme los datos recopilados en información disponible para la gestión.
+                                </p>
+
+                                <ul class="list-unstyled small mb-0">
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Visores generales
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Reportes de seguimiento
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Reportes por módulo
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-check text-success me-2" aria-hidden="true"></i>
+                                        Consulta histórica
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </article>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="bg-dark text-white py-4">
+
+        <div class="container">
+
+            <div class="row g-3">
+
+                <div class="col-6">
+                    <p class="fw-bold">
+                        <i class="fa-solid fa-school text-success me-2" aria-hidden="true"> </i>
+                        SICEN
+                    </p>
+
+                    <p class="text-white-50 small mt-2 mb-0">
+                        Plataforma para la gestión, seguimiento y validación de información estadística.
+                    </p>
+
+                </div>
+
+                <div class="col-3">
+                    <p class="fw-bold">
+                        Plataforma
+                    </p>
+
+                    <div class="mt-2">
+
+                        <a href="#inicio" class="text-white-50 text-decoration-none small me-2">
+                            Inicio
+                        </a>
+
+                        <a href="#funcionalidades" class="text-white-50 text-decoration-none small me-2">
+                            Funcionalidades
+                        </a>
+
+                        <a href="#usuarios" class="text-white-50 text-decoration-none small">
+                            Gestión
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="col-3">
+
+                    <p class="fw-bold">
+                        Acceso institucional
+                    </p>
+
+                    <p class="text-white-50 small mt-2 mb-0">
+                        Acceso según roles y permisos definidos.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <hr class="border-secondary my-3">
+
+
+            <p class="d-flex justify-content-between flex-wrap gap-2 text-white-50 small">
+
+                <span>
+                    © 2026 SICEN
+                </span>
+
+                <span>
+                    Empresa X
+                </span>
+            </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
