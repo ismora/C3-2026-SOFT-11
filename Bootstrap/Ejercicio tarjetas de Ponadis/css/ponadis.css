@@ -171,3 +171,61 @@ body{
     align-items: center;
     justify-content: flex-start;
 }
+
+
+/* ---- FILA 1: layout responsivo con media queries ---- */
+
+/* Base = Desktop: 3 tarjetas en fila */
+.fila-1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;   /* centra las tarjetas */
+    gap: 1.5rem;               /* separación entre tarjetas */
+}
+
+.fila-1 .card-wrapper {
+    flex: 0 0 22%;             /* ≈ ancho de col-2 + un poco más */
+    max-width: 22%;
+}
+
+/* ---- Tablet: 2 tarjetas por fila ---- */
+@media (max-width: 991.98px) {
+    .fila-1 .card-wrapper {
+        flex: 0 0 42%;
+        max-width: 42%;
+    }
+}
+
+/* ---- Móvil: 1 tarjeta por fila ---- */
+@media (max-width: 575.98px) {
+    .fila-1 .card-wrapper {
+        flex: 0 0 90%;
+        max-width: 90%;
+    }
+}
+
+@media(prefers-color-scheme: dark){
+    :root {
+        --bg-page:        #121212;
+        --bg-card:        #1e1e1e;
+        --text-primary:   #f1f1f1;
+        --text-secondary: #b0b0b0;
+        --card-border:    #2e2e2e;
+        --card-shadow:    0 2px 6px rgba(0, 0, 0, 0.6);
+        --card-number-bg: #4d8dff;
+        --card-number-fg: #0b0b0b;
+    }
+
+    /* Ajustes puntuales para elementos de Bootstrap que traen su propio color */
+    body {
+        background-color: var(--bg-page);
+        color: var(--text-primary);
+    }
+
+    .card-ponadis {
+        background-color: var(--bg-card);
+        color: var(--text-primary);
+        border-color: var(--card-border);
+    }
+
+}
