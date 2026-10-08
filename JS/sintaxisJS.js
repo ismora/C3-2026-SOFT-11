@@ -20,10 +20,12 @@
  *   17. JSON
  *   18. Excepciones
  *   19. Map y Set
- *   20. Clases
- *   21. Programación asíncrona
- *   22. Módulos
- *   23. Buenas prácticas
+ *   20. Clases   
+ *   21. Almacenamiento en el navegador (localStorage y sessionStorage)
+ *   22. Expresiones regulares (RegExp)
+ *   23. Programación asíncrona
+ *   24. Módulos
+ *   25. Buenas prácticas
  */
 
 
@@ -1277,22 +1279,458 @@ console.log("¿Es CuentaBancaria?", ahorroLuis instanceof CuentaBancaria);   // 
 console.log("Total de cuentas creadas:", CuentaBancaria.totalCuentas);      // 2
 
 
+
+ 
+ 
 // =====================================================================
-// 21. PROGRAMACIÓN ASÍNCRONA
+// 24. ALMACENAMIENTO EN EL NAVEGADOR: localStorage y sessionStorage
+// =====================================================================
+/*
+La Web Storage API permite guardar datos en el NAVEGADOR del usuario,
+como pares clave-valor.
+ 
+- localStorage: los datos permanecen aunque se cierre el navegador.
+- sessionStorage: los datos se borran al cerrar la pestaña.
+ 
+Características:
+- Solo guarda TEXTO (string). Los números, objetos y arreglos se deben
+  convertir con JSON.stringify() y recuperar con JSON.parse().
+- Capacidad aproximada de 5 MB por sitio.
+- Cada sitio (dominio + protocolo + puerto) tiene su propio espacio:
+  una página no puede leer el localStorage de otra.
+- Es síncrono y no tiene fecha de expiración.
+- Se puede revisar en las herramientas del navegador:
+  F12 → pestaña "Aplicación" (Application) → Local Storage.
+ 
+¿Cuándo usarlo?
+  ✔ Preferencias: tema claro/oscuro, idioma, tamaño de letra.
+  ✔ Un borrador de formulario o un carrito de compras temporal.
+  ✔ El último filtro o pestaña que eligió el usuario.
+¿Cuándo NO usarlo?
+  ✘ Contraseñas, tokens de sesión, datos personales o de pago:
+    cualquier script de la página puede leerlos (riesgo XSS).
+  ✘ Datos que deben compartirse entre usuarios o dispositivos:
+    para eso está la base de datos (MongoDB) en el servidor.
+*/
+ 
+// --- Compatibilidad: localStorage existe en el navegador, no en Node.js.
+// Para que este archivo también se pueda ejecutar con "node", se crea
+// un sustituto en memoria SOLO si no existe. En el navegador no se usa.
+if (typeof localStorage === "undefined") {
+    globalThis.localStorage = {
+        _datos: {},
+        setItem(clave, valor) { this._datos[clave] = String(valor); },
+        getItem(clave) { return clave in this._datos ? this._datos[clave] : null; },
+        removeItem(clave) { delete this._datos[clave]; },
+        clear() { this._datos = {}; },
+        key(i) { return Object.keys(this._datos)[i] ?? null; },
+        get length() { return Object.keys(this._datos).length; }
+    };
+    console.log("(Node.js: se usa un localStorage simulado en memoria)");
+}
+ 
+// --- Métodos básicos ---
+localStorage.setItem("tema", "oscuro");              // guardar
+localStorage.setItem("idioma", "es");
+ 
+const temaGuardado = localStorage.getItem("tema");    // leer
+console.log("Tema:", temaGuardado);                   // "oscuro"
+ 
+console.log("Clave inexistente:", localStorage.getItem("noExiste"));   // null
+ 
+console.log("Cantidad de claves:", localStorage.length);   // 2
+console.log("Primera clave:", localStorage.key(0));        // "tema"
+ 
+localStorage.removeItem("idioma");                    // eliminar una clave
+console.log("Después de eliminar:", localStorage.length);  // 1
+ 
+// localStorage.clear();   // elimina TODO lo del sitio (usar con cuidado)
+ 
+// --- Todo se guarda como texto ---
+localStorage.setItem("visitas", 5);
+const visitasTexto = localStorage.getItem("visitas");
+console.log(typeof visitasTexto);                     // "string" (!)
+console.log(visitasTexto + 1);                        // "51"  ✘
+console.log(Number(visitasTexto) + 1);                // 6     ✔
+ 
+// Ejemplo: contador de visitas
+// ?? da un valor inicial cuando la clave todavía no existe (getItem → null)
+const visitas = Number(localStorage.getItem("contadorVisitas") ?? 0) + 1;
+localStorage.setItem("contadorVisitas", visitas);
+console.log(`Esta es su visita número ${visitas}`);
+ 
+// --- Guardar objetos y arreglos: JSON.stringify / JSON.parse ---
+const preferenciasUsuario = { tema: "oscuro", tamanoLetra: 18, notificaciones: true };
+ 
+// ✘ Sin convertir se guarda el texto "[object Object]"
+localStorage.setItem("prefMal", preferenciasUsuario);
+console.log("Sin JSON:", localStorage.getItem("prefMal"));
+ 
+// ✔ Convertir a JSON al guardar y de vuelta al leer
+localStorage.setItem("preferencias", JSON.stringify(preferenciasUsuario));
+const prefLeidas = JSON.parse(localStorage.getItem("preferencias"));
+console.log("Con JSON:", prefLeidas.tema, prefLeidas.tamanoLetra);
+ 
+// --- Funciones auxiliares reutilizables ---
+// Centralizan la conversión y el manejo de errores en un solo lugar.
+function guardarDato(clave, valor) {
+    try {
+        localStorage.setItem(clave, JSON.stringify(valor));
+        return true;
+    } catch (error) {
+        // Ocurre si se supera el espacio disponible o el navegador lo bloquea
+        console.error("No se pudo guardar:", error.message);
+        return false;
+    }
+}
+ 
+function leerDato(clave, valorPorDefecto = null) {
+    const textoGuardado = localStorage.getItem(clave);
+    if (textoGuardado === null) return valorPorDefecto;    // no existe
+    try {
+        return JSON.parse(textoGuardado);
+    } catch {
+        // El texto guardado no es JSON válido (por ejemplo, alguien lo editó)
+        return valorPorDefecto;
+    }
+}
+ 
+guardarDato("ultimaBusqueda", { termino: "laboratorio", pagina: 2 });
+console.log("Última búsqueda:", leerDato("ultimaBusqueda"));
+console.log("Dato inexistente:", leerDato("carritoViejo", []));     // []
+ 
+localStorage.setItem("corrupto", "{ esto no es JSON");
+console.log("Dato corrupto:", leerDato("corrupto", "valor seguro"));  // "valor seguro"
+ 
+// --- Ejemplo práctico: carrito de compras persistente ---
+// El carrito sobrevive aunque el usuario recargue la página.
+function obtenerCarrito() {
+    return leerDato("carrito", []);
+}
+ 
+function agregarAlCarrito(producto, precioUnitario, cantidad = 1) {
+    const carritoActual = obtenerCarrito();
+    const existente = carritoActual.find(item => item.producto === producto);
+ 
+    if (existente) {
+        existente.cantidad += cantidad;
+    } else {
+        carritoActual.push({ producto, precioUnitario, cantidad });
+    }
+    guardarDato("carrito", carritoActual);     // siempre guardar después de modificar
+}
+ 
+function quitarDelCarrito(producto) {
+    const carritoFiltrado = obtenerCarrito().filter(item => item.producto !== producto);
+    guardarDato("carrito", carritoFiltrado);
+}
+ 
+function totalCarrito() {
+    return obtenerCarrito().reduce((suma, item) => suma + item.precioUnitario * item.cantidad, 0);
+}
+ 
+agregarAlCarrito("Café", 1500, 2);
+agregarAlCarrito("Queque", 2000);
+agregarAlCarrito("Café", 1500);
+quitarDelCarrito("Queque");
+console.log("Carrito:", obtenerCarrito());          // Café x3
+console.log("Total del carrito: ₡" + totalCarrito()); // 4500
+ 
+// --- Recorrer todo lo guardado ---
+for (let i = 0; i < localStorage.length; i++) {
+    const claveActual = localStorage.key(i);
+    console.log(`  ${claveActual} = ${localStorage.getItem(claveActual)}`);
+}
+ 
+// --- Uso en una página: recordar el tema (con Bootstrap) ---
+/*
+<button id="btnTema" class="btn btn-outline-secondary">Cambiar tema</button>
+ 
+// Al cargar la página se aplica el tema guardado (o "light" por defecto)
+const temaInicial = localStorage.getItem("tema") ?? "light";
+document.documentElement.setAttribute("data-bs-theme", temaInicial);
+ 
+document.getElementById("btnTema").addEventListener("click", () => {
+    const actual = document.documentElement.getAttribute("data-bs-theme");
+    const nuevo = actual === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-bs-theme", nuevo);
+    localStorage.setItem("tema", nuevo);
+});
+*/
+ 
+// --- Uso en una página: guardar el borrador de un formulario ---
+/*
+const txtComentario = document.getElementById("txtComentario");
+ 
+// Restaurar el borrador al cargar la página
+txtComentario.value = localStorage.getItem("borradorComentario") ?? "";
+ 
+// Guardar cada vez que el usuario escribe
+txtComentario.addEventListener("input", () => {
+    localStorage.setItem("borradorComentario", txtComentario.value);
+});
+ 
+// Borrar el borrador cuando el formulario se envía con éxito
+document.getElementById("frmComentario").addEventListener("submit", () => {
+    localStorage.removeItem("borradorComentario");
+});
+*/
+ 
+// --- sessionStorage: misma API, pero dura solo mientras la pestaña está abierta ---
+/*
+sessionStorage.setItem("pasoActual", "2");           // paso de un formulario por etapas
+const paso = sessionStorage.getItem("pasoActual");
+sessionStorage.removeItem("pasoActual");
+*/
+ 
+// --- Evento "storage": avisa a OTRAS pestañas del mismo sitio cuando
+//     cambia el localStorage (útil para sincronizar un carrito) ---
+/*
+window.addEventListener("storage", (evento) => {
+    console.log(`La clave ${evento.key} cambió de ${evento.oldValue} a ${evento.newValue}`);
+});
+*/
+ 
+// Limpieza de los datos usados en estos ejemplos
+localStorage.clear();
+ 
+ 
+// =====================================================================
+// 22. Expresiones regulares (RegExp)
+// =====================================================================
+/*
+Una expresión regular (regex) es un PATRÓN que describe un conjunto de
+cadenas de texto. Se usa para:
+  - Validar formatos: correos, teléfonos, cédulas, contraseñas.
+  - Buscar y extraer información de un texto.
+  - Reemplazar o limpiar texto.
+ 
+Se escribe entre barras, seguida de banderas opcionales:  /patrón/banderas
+ 
+Elementos más usados:
+  Caracteres
+    .       cualquier carácter (excepto salto de línea)
+    \d      un dígito (0-9)            \D  cualquier cosa que NO sea dígito
+    \w      letra, dígito o _          \W  lo contrario
+    \s      espacio, tab o salto       \S  lo contrario
+    \.      un punto literal (la \ "escapa" los caracteres especiales)
+  Conjuntos
+    [abc]   a, b o c                   [^abc]  cualquiera excepto a, b, c
+    [a-z]   rango de minúsculas        [A-Za-zÁÉÍÓÚáéíóúÑñ]  letras en español
+  Cuantificadores (se aplican a lo que está justo antes)
+    *       0 o más veces              +   1 o más veces
+    ?       0 o 1 vez (opcional)       {n} exactamente n veces
+    {n,}    n o más veces              {n,m} entre n y m veces
+  Anclas
+    ^       inicio del texto           $   final del texto
+    (Para VALIDAR un dato completo, use ^ y $; si no, basta con que el
+     patrón aparezca en cualquier parte)
+  Grupos y alternativas
+    (abc)   grupo (se puede extraer)   a|b  a o b
+    (?<nombre>...)  grupo con nombre
+    (?=...) "seguido de" (lookahead): verifica sin consumir caracteres
+  Banderas
+    g   global: todas las coincidencias, no solo la primera
+    i   ignora mayúsculas y minúsculas
+    m   multilínea: ^ y $ aplican a cada línea
+    u   Unicode (tildes, emojis)
+*/
+ 
+// --- Crear una expresión regular ---
+const regexLiteral = /hola/i;                       // forma literal (la más común)
+const regexConstructor = new RegExp("hola", "i");   // útil si el patrón viene de una variable
+console.log(regexLiteral.source, regexConstructor.flags);
+ 
+// Con el constructor se deben escapar los caracteres especiales del texto
+function escaparRegex(textoUsuario) {
+    return textoUsuario.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+const terminoBusqueda = "C++";
+const regexBusqueda = new RegExp(escaparRegex(terminoBusqueda), "i");
+console.log("¿Menciona C++?", regexBusqueda.test("Curso de c++ básico"));   // true
+ 
+// --- test(): ¿el texto cumple el patrón? → true / false ---
+console.log(/\d/.test("abc3"));          // true  (contiene al menos un dígito)
+console.log(/^\d+$/.test("12345"));      // true  (SOLO dígitos, de inicio a fin)
+console.log(/^\d+$/.test("123a5"));      // false
+console.log(/gato/i.test("GATO negro")); // true  (bandera i)
+ 
+// --- match(): devuelve las coincidencias ---
+const textoPedido = "Pedido 45: 3 cafés a ₡1500 y 2 queques a ₡2000";
+ 
+console.log(textoPedido.match(/\d+/));    // primera coincidencia (con índice y detalles)
+console.log(textoPedido.match(/\d+/g));   // ["45", "3", "1500", "2", "2000"] (todas)
+console.log("sin números".match(/\d+/g)); // null → use ?? [] para evitar errores
+const numerosEncontrados = ("sin números".match(/\d+/g) ?? []).map(Number);
+console.log("Números:", numerosEncontrados);   // []
+ 
+// --- Grupos: extraer partes específicas ---
+const fechaTexto = "La entrega es el 15/10/2026.";
+const coincidenciaFecha = fechaTexto.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+console.log("Día:", coincidenciaFecha[1], "Mes:", coincidenciaFecha[2], "Año:", coincidenciaFecha[3]);
+ 
+// Grupos con nombre: más legibles
+const regexFecha = /(?<dia>\d{2})\/(?<mes>\d{2})\/(?<anio>\d{4})/;
+const { dia: diaEntrega, mes: mesEntrega, anio: anioEntrega } = fechaTexto.match(regexFecha).groups;
+console.log(`Fecha ISO: ${anioEntrega}-${mesEntrega}-${diaEntrega}`);   // 2026-10-15
+ 
+// --- matchAll(): recorrer todas las coincidencias con sus grupos ---
+const listaPrecios = "Café ₡1500, Té ₡1200, Queque ₡2000";
+for (const m of listaPrecios.matchAll(/(?<producto>[A-Za-zÁÉÍÓÚáéíóúñ]+) ₡(?<precio>\d+)/g)) {
+    console.log(`${m.groups.producto} cuesta ${m.groups.precio}`);
+}
+ 
+// --- replace() y replaceAll() ---
+console.log("Hola    mundo   JS".replace(/\s+/g, " "));            // une espacios repetidos
+console.log("  texto con espacios  ".replace(/^\s+|\s+$/g, ""));  // como trim()
+console.log("88881234".replace(/(\d{4})(\d{4})/, "$1-$2"));        // "8888-1234" ($1 = grupo 1)
+console.log("4111222233334444".replace(/\d(?=\d{4})/g, "*"));      // oculta todo menos los últimos 4
+console.log("Precio: 1500 colones".replace(/\d+/, n => `₡${Number(n).toLocaleString("es-CR")}`));
+console.log("año-2026-curso-js".replaceAll("-", " "));             // con texto simple no hace falta regex
+ 
+// Quitar tildes para búsquedas (normalize separa la letra de la tilde)
+const sinTildes = "Programación en Español".normalize("NFD").replace(/[̀-ͯ]/g, "");
+console.log(sinTildes);   // "Programacion en Espanol"
+ 
+// --- split() con regex: separar por varios delimitadores ---
+console.log("rojo, verde;azul  amarillo".split(/[,;\s]+/));   // ["rojo","verde","azul","amarillo"]
+ 
+// --- search(): posición de la primera coincidencia (-1 si no hay) ---
+console.log("Código: AB-123".search(/\d/));   // 11
+ 
+// --- Validaciones comunes (adaptadas a Costa Rica) ---
+const VALIDACIONES = {
+    // Cédula física: 9 dígitos, con o sin guiones (1-0234-0567 o 102340567)
+    cedula: /^[1-9]-?\d{4}-?\d{4}$/,
+ 
+    // Teléfono: 8 dígitos que empiezan con 2, 4, 5, 6, 7 u 8; guion o espacio opcional
+    telefono: /^[245678]\d{3}[-\s]?\d{4}$/,
+ 
+    // Correo: validación básica (algo@algo.algo); la validación definitiva
+    // es enviar un correo de confirmación
+    correo: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+ 
+    // Correo institucional
+    correoInstitucional: /^[\w.-]+@ucenfotec\.ac\.cr$/i,
+ 
+    // Nombre: solo letras (con tildes y ñ) y espacios, de 2 a 50 caracteres
+    nombre: /^[A-Za-zÁÉÍÓÚÜáéíóúüÑñ ]{2,50}$/,
+ 
+    // Código postal: 5 dígitos
+    codigoPostal: /^\d{5}$/,
+ 
+    // Fecha dd/mm/aaaa (solo el formato; no verifica que el día exista)
+    fecha: /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+ 
+    // Hora de 24 horas hh:mm
+    hora: /^([01]\d|2[0-3]):[0-5]\d$/,
+ 
+    // Contraseña segura: mínimo 8 caracteres, al menos una minúscula,
+    // una mayúscula, un número y un símbolo. Cada (?=...) verifica una regla.
+    clave: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/
+};
+ 
+const casosPrueba = {
+    cedula: ["1-0234-0567", "102340567", "0-1234-5678", "12345"],
+    telefono: ["8888-1234", "2222 3333", "1234-5678", "8888123"],
+    correo: ["ana@ucenfotec.ac.cr", "ana@correo", "ana correo@x.com"],
+    correoInstitucional: ["luis.mora@ucenfotec.ac.cr", "luis@gmail.com"],
+    nombre: ["María José", "Ñandú", "R2D2"],
+    fecha: ["15/10/2026", "32/01/2026", "1/5/2026"],
+    hora: ["08:30", "23:59", "24:00"],
+    clave: ["Cenfo2026!", "cenfo2026", "Corta1!"]
+};
+ 
+for (const [campo, valores] of Object.entries(casosPrueba)) {
+    for (const valor of valores) {
+        const valido = VALIDACIONES[campo].test(valor);
+        console.log(`${campo.padEnd(20)} ${valor.padEnd(28)} ${valido ? "✔ válido" : "✘ inválido"}`);
+    }
+}
+ 
+// --- Validar una contraseña regla por regla (mensajes claros al usuario) ---
+function revisarClave(clave) {
+    const reglas = [
+        { regex: /.{8,}/,          mensaje: "al menos 8 caracteres" },
+        { regex: /[a-z]/,          mensaje: "una minúscula" },
+        { regex: /[A-Z]/,          mensaje: "una mayúscula" },
+        { regex: /\d/,             mensaje: "un número" },
+        { regex: /[^A-Za-z0-9]/,   mensaje: "un símbolo" }
+    ];
+    const faltantes = reglas.filter(r => !r.regex.test(clave)).map(r => r.mensaje);
+    return faltantes.length === 0 ? "Contraseña segura" : `Falta: ${faltantes.join(", ")}`;
+}
+console.log(revisarClave("hola"));         // Falta: al menos 8 caracteres, una mayúscula, ...
+console.log(revisarClave("Cenfo2026!"));   // Contraseña segura
+ 
+// --- Limpiar datos antes de guardarlos ---
+function normalizarTelefono(telefonoIngresado) {
+    const soloDigitos = telefonoIngresado
+        .replace(/\D/g, "")              // quita todo lo que no es dígito
+        .replace(/^506(?=\d{8}$)/, "");  // quita el código de país si viene
+    return soloDigitos.length === 8 ? soloDigitos.replace(/(\d{4})(\d{4})/, "$1-$2") : null;
+}
+console.log(normalizarTelefono("(+506) 8888 1234"));            // "8888-1234"
+console.log(normalizarTelefono("8888.12.34"));                  // "8888-1234"
+console.log(normalizarTelefono("123"));                         // null
+ 
+// --- Cuidado con la bandera g y test(): la regex "recuerda" su posición ---
+const regexGlobal = /a/g;
+console.log(regexGlobal.test("casa"));   // true
+console.log(regexGlobal.test("casa"));   // true  (busca desde la posición anterior)
+console.log(regexGlobal.test("casa"));   // false (!) llegó al final
+// Solución: no use la bandera g con test(), o reinicie con regexGlobal.lastIndex = 0
+ 
+// --- Uso en formularios ---
+/*
+// 1) Validación con el atributo pattern de HTML (no lleva / / ni ^ $: se agregan solos)
+<input type="text" id="txtTelefono" pattern="[245678]\d{3}-?\d{4}"
+       title="8 dígitos, por ejemplo 8888-1234" required>
+ 
+// 2) Validación con JavaScript y estilos de Bootstrap
+const txtCorreo = document.getElementById("txtCorreo");
+txtCorreo.addEventListener("input", () => {
+    const esValido = VALIDACIONES.correo.test(txtCorreo.value.trim());
+    txtCorreo.classList.toggle("is-valid", esValido);
+    txtCorreo.classList.toggle("is-invalid", !esValido);
+});
+ 
+// 3) En el servidor, el mismo patrón en el esquema de Mongoose
+correo: {
+    type: String,
+    match: [/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, "Correo inválido"]
+}
+*/
+ 
+/*
+Buenas prácticas con expresiones regulares:
+✔ Use ^ y $ cuando valide un dato completo.
+✔ Guarde las regex en constantes con nombre (VALIDACIONES.correo) y documéntelas.
+✔ Pruebe los patrones con casos válidos e inválidos (como casosPrueba) o en regex101.com.
+✔ Prefiera varias regex sencillas a una enorme e ilegible.
+✔ Valide en el cliente para dar retroalimentación inmediata y SIEMPRE repita
+  la validación en el servidor.
+✘ No intente validar todo con regex: una fecha como 31/02/2026 cumple el
+  formato pero no existe; ese tipo de reglas se verifican con código.
+*/
+
+
+// =====================================================================
+// 23. Programación asíncrona
 // =====================================================================
 // JavaScript ejecuta una instrucción a la vez (un solo hilo). Las tareas
 // que tardan (consultar un servidor, leer un archivo, un temporizador)
 // se ejecutan de forma ASÍNCRONA: el programa continúa y el resultado
 // se procesa cuando está listo.
 // Nota: por eso los mensajes de esta sección aparecen al FINAL de la consola.
-
+ 
 // --- Temporizadores ---
 console.log("1. Antes del setTimeout");
 setTimeout(() => {
     console.log("3. Dentro del setTimeout (después de 1 segundo)");
 }, 1000);
 console.log("2. Después del setTimeout (no espera)");
-
+ 
 // setInterval repite cada cierto tiempo; clearInterval lo detiene
 let repeticiones = 0;
 const intervalo = setInterval(() => {
@@ -1300,7 +1738,7 @@ const intervalo = setInterval(() => {
     console.log("Intervalo", repeticiones);
     if (repeticiones === 3) clearInterval(intervalo);
 }, 300);
-
+ 
 // --- Promesas ---
 // Una promesa representa un valor que estará disponible en el futuro.
 // Estados: pendiente → cumplida (resolve) o rechazada (reject).
@@ -1315,19 +1753,19 @@ function buscarEstudiante(id) {
         }, 500);
     });
 }
-
+ 
 // Consumir con then / catch / finally
 buscarEstudiante(1)
     .then(est => console.log("then →", est.nombre))
     .catch(error => console.error("catch →", error.message))
     .finally(() => console.log("finally → consulta terminada"));
-
+ 
 // --- async / await: la forma moderna y más legible ---
 async function mostrarEstudiantes() {
     try {
         const est = await buscarEstudiante(1);     // espera sin bloquear el programa
         console.log("await →", est.nombre);
-
+ 
         const otro = await buscarEstudiante(99);   // este falla
         console.log(otro.nombre);
     } catch (error) {
@@ -1335,7 +1773,7 @@ async function mostrarEstudiantes() {
     }
 }
 mostrarEstudiantes();
-
+ 
 // --- Varias promesas en paralelo ---
 async function cargarTodo() {
     const resultados = await Promise.allSettled([buscarEstudiante(1), buscarEstudiante(2)]);
@@ -1344,7 +1782,7 @@ async function cargarTodo() {
     );
 }
 cargarTodo();
-
+ 
 // --- fetch: solicitudes HTTP (se usa con el servidor Express del proyecto) ---
 /*
 async function cargarProductos() {
@@ -1357,7 +1795,7 @@ async function cargarProductos() {
         console.error("No se pudieron cargar:", error.message);
     }
 }
-
+ 
 // Enviar datos (POST)
 await fetch("/api/productos", {
     method: "POST",
@@ -1365,14 +1803,14 @@ await fetch("/api/productos", {
     body: JSON.stringify({ nombre: "Café", precio: 1500 })
 });
 */
-
-
+ 
+ 
 // =====================================================================
-// 22. MÓDULOS
+// 24. Módulos
 // =====================================================================
 // Los módulos permiten dividir el código en varios archivos.
 // (Se muestran comentados porque requieren archivos separados.)
-
+ 
 /*
 // ---- CommonJS (Node.js, usado con Express) ----
 // utilidades.js
@@ -1380,28 +1818,28 @@ function formatearMoneda(monto) {
     return "₡" + monto.toFixed(2);
 }
 module.exports = { formatearMoneda };
-
+ 
 // app.js
 const { formatearMoneda } = require("./utilidades");
 console.log(formatearMoneda(1500));
-
-
+ 
+ 
 // ---- Módulos ES (navegador y Node moderno) ----
 // utilidades.js
 export const IVA = 0.13;
 export function calcularTotal(monto) { return monto * (1 + IVA); }
 export default class Carrito { }        // una exportación por defecto por archivo
-
+ 
 // main.js
 import Carrito, { IVA, calcularTotal } from "./utilidades.js";
-
+ 
 // En el HTML:
 <script type="module" src="js/main.js"></script>
 */
-
-
+ 
+ 
 // =====================================================================
-// 23. BUENAS PRÁCTICAS 
+// 25. Buenas prácticas (RESUMEN)
 // =====================================================================
 /*
 ✔ Use const por defecto y let solo si el valor cambia. Nunca var.
