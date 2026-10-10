@@ -360,6 +360,7 @@ estaLogueado && console.log("Bienvenido de nuevo");   // solo se ejecuta si es t
 // --- Operador ternario: condición ? siVerdadero : siFalso ---
 const nota = 75;
 const estadoCurso = nota >= 70 ? "Aprobado" : "Reprobado";
+
 console.log("Estado:", estadoCurso);
 
 // --- Coalescencia nula (??): usa el valor de la derecha solo si la izquierda es null o undefined (a diferencia de ||, respeta 0 y "")

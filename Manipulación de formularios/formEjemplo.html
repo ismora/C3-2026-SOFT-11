@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SICEN | Solicitud de censo escolar</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 (íconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Estilos propios: SIEMPRE después de Bootstrap para poder personalizarlo -->
+    <link rel="stylesheet" href="css/cisen.css">
+</head>
+
+<body>
+
+    <!-- ===================== ENCABEZADO ===================== -->
+    <header class="encabezado-sicen">
+        <div class="container d-flex align-items-center gap-3 py-3">
+            <span class="logo-sicen" aria-hidden="true"><i class="fa-solid fa-school"></i></span>
+            <div>
+                <p class="mb-0 small text-white-50">SICEN</p>
+                <h1 class="h4 mb-0 text-white">Solicitud de apertura de censo escolar</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-4">
+
+        <p class="text-secondary">
+            Complete el formulario para solicitar la apertura de un censo en su centro educativo.
+            Los campos marcados con <span class="obligatorio" aria-hidden="true">*</span>
+            <span class="visually-hidden">asterisco</span> son obligatorios.
+        </p>
+
+        <!-- ===== Barra de progreso: se actualiza con JS según los campos válidos ===== -->
+        <div class="progreso-formulario mb-4">
+            <div class="d-flex justify-content-between small mb-1">
+                <span id="textoProgreso">Avance del formulario</span>
+                <span id="porcentajeProgreso" aria-hidden="true">0 %</span>
+            </div>
+            <div class="progress" role="progressbar" aria-labelledby="textoProgreso"
+                aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="barraProgreso">
+                <div class="progress-bar bg-danger" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- novalidate: desactiva los mensajes nativos del navegador para validar con JS.
+             Los atributos required se mantienen porque informan a los lectores de pantalla. -->
+        <form id="formSolicitud" novalidate>
+
+            <!-- ===================== 1. DATOS DEL SOLICITANTE ===================== -->
+            <fieldset class="seccion-form">
+                <legend><i class="fa-solid fa-user" aria-hidden="true"></i> 1. Datos del solicitante</legend>
+
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label for="nombre" class="form-label">Nombre <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" autocomplete="given-name"
+                            placeholder="Ej. María José" required aria-describedby="error-nombre">
+                        <div class="invalid-feedback" id="error-nombre"></div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="apellidos" class="form-label">Apellidos <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="text" id="apellidos" name="apellidos" class="form-control" autocomplete="family-name"
+                            placeholder="Ej. Rodríguez Solano" required aria-describedby="error-apellidos">
+                        <div class="invalid-feedback" id="error-apellidos"></div>
+                    </div>
+
+                    <!-- El tipo de identificación cambia dinámicamente el formato de la cédula -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="tipoIdentificacion" class="form-label">Tipo de identificación <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <select id="tipoIdentificacion" name="tipoIdentificacion" class="form-select" required>
+                            <option value="fisica" selected>Cédula física</option>
+                            <option value="dimex">DIMEX</option>
+                            <option value="pasaporte">Pasaporte</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="identificacion" class="form-label">Número de identificación <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="text" id="identificacion" name="identificacion" class="form-control"
+                            placeholder="Ej. 1-2345-6789" required aria-describedby="ayuda-identificacion error-identificacion">
+                        <div class="form-text" id="ayuda-identificacion">9 dígitos, con o sin guiones.</div>
+                        <div class="invalid-feedback" id="error-identificacion"></div>
+                    </div>
+
+                    <!-- Si se elige "Otro", JS crea un campo adicional -->
+                    <div class="col-12 col-lg-4" id="contenedorTipoUsuario">
+                        <label for="tipoUsuario" class="form-label">Tipo de usuario <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <select id="tipoUsuario" name="tipoUsuario" class="form-select" required aria-describedby="error-tipoUsuario">
+                            <option value="">Seleccione una opción</option>
+                            <option>Director(a)</option>
+                            <option>Docente</option>
+                            <option>Funcionario(a) regional</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                        <div class="invalid-feedback" id="error-tipoUsuario"></div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- ===================== 2. CONTACTO ===================== -->
+            <fieldset class="seccion-form">
+                <legend><i class="fa-solid fa-address-book" aria-hidden="true"></i> 2. Datos de contacto</legend>
+
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label for="correo" class="form-label">Correo electrónico <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="email" id="correo" name="correo" class="form-control" autocomplete="email"
+                            placeholder="nombre@mep.go.cr" required aria-describedby="error-correo">
+                        <div class="invalid-feedback" id="error-correo"></div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="telefono" class="form-label">Teléfono <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <!-- has-validation: necesario para que el input-group muestre bien los bordes del error -->
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">+506</span>
+                            <input type="tel" id="telefono" name="telefono" class="form-control" autocomplete="tel-national"
+                                placeholder="8888-8888" maxlength="9" required aria-describedby="ayuda-telefono error-telefono">
+                            <div class="invalid-feedback" id="error-telefono"></div>
+                        </div>
+                        <div class="form-text" id="ayuda-telefono">El guion se agrega automáticamente.</div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="provincia" class="form-label">Provincia <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <select id="provincia" name="provincia" class="form-select" required aria-describedby="error-provincia">
+                            <option value="">Seleccione una provincia</option>
+                            <option>San José</option>
+                            <option>Alajuela</option>
+                            <option>Cartago</option>
+                            <option>Heredia</option>
+                            <option>Guanacaste</option>
+                            <option>Puntarenas</option>
+                            <option>Limón</option>
+                        </select>
+                        <div class="invalid-feedback" id="error-provincia"></div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- ===================== 3. CENTRO EDUCATIVO ===================== -->
+            <fieldset class="seccion-form">
+                <legend><i class="fa-solid fa-building-columns" aria-hidden="true"></i> 3. Centro educativo</legend>
+
+                <div class="row g-3">
+                    <div class="col-12 col-lg-6">
+                        <label for="nombreCentro" class="form-label">Nombre del centro educativo <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="text" id="nombreCentro" name="nombreCentro" class="form-control"
+                            placeholder="Ej. Liceo de Costa Rica" required aria-describedby="error-nombreCentro">
+                        <div class="invalid-feedback" id="error-nombreCentro"></div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label for="codigoInstitucional" class="form-label">Código institucional <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">#</span>
+                            <input type="text" id="codigoInstitucional" name="codigoInstitucional" class="form-control"
+                                inputmode="numeric" placeholder="Ej. 4021" required aria-describedby="error-codigoInstitucional">
+                            <div class="invalid-feedback" id="error-codigoInstitucional"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label for="cantidadEstudiantes" class="form-label">Cantidad de estudiantes <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="number" id="cantidadEstudiantes" name="cantidadEstudiantes" class="form-control"
+                            min="1" max="5000" placeholder="Ej. 850" required aria-describedby="error-cantidadEstudiantes">
+                        <div class="invalid-feedback" id="error-cantidadEstudiantes"></div>
+                    </div>
+
+                    <!-- Grupo de checkboxes: al menos uno obligatorio -->
+                    <div class="col-12">
+                        <fieldset aria-describedby="error-niveles">
+                            <legend class="form-label fs-6 fw-normal mb-2">Niveles que atiende <span class="obligatorio" aria-hidden="true">*</span></legend>
+                            <div class="d-flex flex-wrap gap-3" id="grupoNiveles">
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="niveles" id="nivel1" value="Preescolar"><label class="form-check-label" for="nivel1">Preescolar</label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="niveles" id="nivel2" value="I y II Ciclo"><label class="form-check-label" for="nivel2">I y II Ciclo</label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="niveles" id="nivel3" value="III Ciclo"><label class="form-check-label" for="nivel3">III Ciclo</label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="niveles" id="nivel4" value="Educación Diversificada"><label class="form-check-label" for="nivel4">Educación Diversificada</label></div>
+                            </div>
+                            <div class="invalid-feedback" id="error-niveles"></div>
+                        </fieldset>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- ===================== 4. CONFIGURACIÓN DEL CENSO ===================== -->
+            <fieldset class="seccion-form">
+                <legend><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> 4. Configuración del censo</legend>
+
+                <div class="row g-3">
+                    <div class="col-12 col-lg-6">
+                        <label for="nombreCenso" class="form-label">Nombre del censo <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="text" id="nombreCenso" name="nombreCenso" class="form-control"
+                            placeholder="Ej. Censo de Matrícula Inicial 2027" required aria-describedby="error-nombreCenso">
+                        <div class="invalid-feedback" id="error-nombreCenso"></div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label for="fechaApertura" class="form-label">Fecha de apertura <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="date" id="fechaApertura" name="fechaApertura" class="form-control" required aria-describedby="error-fechaApertura">
+                        <div class="invalid-feedback" id="error-fechaApertura"></div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label for="fechaCierre" class="form-label">Fecha de cierre <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="date" id="fechaCierre" name="fechaCierre" class="form-control" required aria-describedby="ayuda-fechaCierre error-fechaCierre">
+                        <div class="form-text" id="ayuda-fechaCierre">Debe ser posterior a la fecha de apertura.</div>
+                        <div class="invalid-feedback" id="error-fechaCierre"></div>
+                    </div>
+
+                    <!-- Select múltiple: JS crea una insignia (badge) por cada opción elegida -->
+                    <div class="col-12 col-md-7">
+                        <label for="formularios" class="form-label">Formularios del censo <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <select id="formularios" name="formularios" class="form-select" multiple size="4" required
+                            aria-describedby="ayuda-formularios error-formularios">
+                            <option value="matricula-primaria">Matrícula Primaria</option>
+                            <option value="matricula-secundaria">Matrícula Secundaria</option>
+                            <option value="infraestructura">Infraestructura Física Escolar</option>
+                            <option value="recursos-tec">Recursos Tecnológicos</option>
+                        </select>
+                        <div class="form-text" id="ayuda-formularios">Use Ctrl (o Cmd) para seleccionar varios.</div>
+                        <div class="invalid-feedback" id="error-formularios"></div>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <p class="form-label mb-2" id="tituloSeleccionados">Seleccionados</p>
+                        <!-- aria-live: el lector de pantalla anuncia los cambios -->
+                        <div id="contenedorBadges" class="contenedor-badges" aria-labelledby="tituloSeleccionados" aria-live="polite">
+                            <span class="text-secondary small" id="sinFormularios">Ningún formulario seleccionado.</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="descripcion" class="form-label">Justificación de la solicitud <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <textarea id="descripcion" name="descripcion" class="form-control" rows="4" maxlength="500"
+                            placeholder="Explique para qué necesita el censo (mínimo 20 caracteres)" required
+                            aria-describedby="contador-descripcion error-descripcion"></textarea>
+                        <div class="d-flex justify-content-end">
+                            <small id="contador-descripcion" class="contador" aria-live="polite">0 / 500</small>
+                        </div>
+                        <div class="invalid-feedback" id="error-descripcion"></div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- ===================== 5. RESPONSABLES ADICIONALES (dinámico) ===================== -->
+            <fieldset class="seccion-form">
+                <legend><i class="fa-solid fa-users" aria-hidden="true"></i> 5. Responsables adicionales <span class="badge text-bg-secondary">Opcional</span></legend>
+                <p class="small text-secondary">Personas que también podrán completar el censo (máximo 3).</p>
+
+                <!-- JS agrega aquí una fila por cada responsable -->
+                <div id="listaResponsables" aria-live="polite"></div>
+
+                <button type="button" id="btnAgregarResponsable" class="btn btn-outline-primary btn-sm">
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i> Agregar responsable
+                </button>
+            </fieldset>
+
+            <!-- ===================== 6. CONFIRMACIÓN ===================== -->
+            <fieldset class="seccion-form">
+                <legend><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 6. Confirmación</legend>
+
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" role="switch" id="guardarPlantilla" name="guardarPlantilla"
+                        aria-controls="contenedorPlantilla" aria-expanded="false">
+                    <label class="form-check-label" for="guardarPlantilla">Guardar esta configuración como plantilla</label>
+                </div>
+                <!-- Se muestra u oculta con JS (clase d-none) -->
+                <div id="contenedorPlantilla" class="d-none mb-3 ms-md-4">
+                    <label for="nombrePlantilla" class="form-label">Nombre de la plantilla <span class="obligatorio" aria-hidden="true">*</span></label>
+                    <input type="text" id="nombrePlantilla" name="nombrePlantilla" class="form-control w-auto"
+                        placeholder="Ej. Censo inicial secundaria" aria-describedby="error-nombrePlantilla">
+                    <div class="invalid-feedback" id="error-nombrePlantilla"></div>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="terminos" name="terminos" required aria-describedby="error-terminos">
+                    <label class="form-check-label" for="terminos">
+                        Confirmo que la información proporcionada es correcta. <span class="obligatorio" aria-hidden="true">*</span>
+                    </label>
+                    <div class="invalid-feedback" id="error-terminos"></div>
+                </div>
+            </fieldset>
+
+            <!-- ===================== BOTONES ===================== -->
+            <div class="d-flex flex-column flex-md-row gap-2 justify-content-end">
+                <button type="reset" id="btnLimpiar" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-eraser" aria-hidden="true"></i> Limpiar
+                </button>
+                <!-- Abre el modal de Bootstrap -->
+                <button type="button" id="btnRevisar" class="btn btn-outline-primary">
+                    <i class="fa-solid fa-list-check" aria-hidden="true"></i> Revisar datos
+                </button>
+                <!-- Envía el formulario: los mensajes se muestran con SweetAlert2 -->
+                <button type="button" id="btnEnviar" class="btn btn-primary">
+                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Enviar solicitud
+                </button>
+            </div>
+        </form>
+
+    </main>
+
+    <!-- ===================== MODAL DE BOOTSTRAP ===================== -->
+    <!-- Su contenido (errores o resumen) se construye con JS -->
+    <div class="modal fade" id="modalRevision" tabindex="-1" aria-labelledby="modalRevisionTitulo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title h5" id="modalRevisionTitulo">Revisión de la solicitud</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="modalRevisionCuerpo"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Seguir editando</button>
+                    <button type="button" class="btn btn-primary d-none" id="btnConfirmarEnvio">
+                        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Confirmar y enviar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plantilla (template) de una fila de responsable: JS la clona -->
+    <template id="plantillaResponsable">
+        <div class="fila-responsable row g-2 align-items-start">
+            <div class="col-12 col-md-5">
+                <label class="form-label small">Nombre completo <span class="obligatorio" aria-hidden="true">*</span></label>
+                <input type="text" class="form-control form-control-sm" data-regla="nombreResponsable" required>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-12 col-md-5">
+                <label class="form-label small">Correo <span class="obligatorio" aria-hidden="true">*</span></label>
+                <input type="email" class="form-control form-control-sm" data-regla="correoResponsable" required>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-12 col-md-2 d-grid">
+                <span class="form-label small d-none d-md-block" aria-hidden="true">&nbsp;</span>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-eliminar-responsable">
+                    <i class="fa-solid fa-trash" aria-hidden="true"></i> Quitar
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Scripts: primero las bibliotecas de terceros, al final el propio -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="js/formulario.js"></script>
+</body>
+
+</html>

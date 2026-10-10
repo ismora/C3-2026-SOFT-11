@@ -1,0 +1,250 @@
+/* =====================================================================
+   SICEN — Estilos del formulario
+   Se cargan de los estilos de Bootstrap para poder personalizarlo.
+   ===================================================================== */
+
+/* ---------- Colores institucionales ---------- */
+:root {
+    --sicen-azul: #021a53;
+    --sicen-azul-claro: #164687;
+    --sicen-azul-oscuro: #002e7a;
+    --sicen-verde: #007a74;
+    --sicen-rojo: #c00053;
+    --sicen-amarillo: #cfac65;
+    --sicen-borde: #c1c5c8;
+
+    /* Variables de Bootstrap se redefinen para que sus componentes (botones, foco, enlaces) usen el azul institucional */
+    --bs-primary: #021a53;
+    --bs-primary-rgb: 22, 74, 152;
+    --bs-link-color: #164687;
+    --bs-link-color-rgb: 22, 74, 152;
+}
+
+body {
+    background-color: #f5f8fc;
+    color: #021a53;
+}
+
+/* ---------- Encabezado ---------- */
+.encabezado-sicen {
+    background: linear-gradient(120deg, var(--sicen-azul), #006aea);
+    border-bottom: 4px solid var(--sicen-amarillo);
+}
+
+.logo-sicen {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-size: 1.5rem;
+}
+
+/* ---------- Botón primario con el color institucional ---------- */
+.btn-primary {
+    --bs-btn-bg: var(--sicen-azul);
+    --bs-btn-border-color: var(--sicen-azul);
+    --bs-btn-hover-bg: #0f3874;
+    --bs-btn-hover-border-color: #0f3874;
+    --bs-btn-active-bg: #0c2d5e;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--sicen-azul);
+    --bs-btn-border-color: var(--sicen-azul);
+    --bs-btn-hover-bg: var(--sicen-azul);
+    --bs-btn-hover-border-color: var(--sicen-azul);
+}
+
+/* ---------- Secciones del formulario ---------- */
+.seccion-form {
+    background: #ffffff;
+    border: 1px solid var(--sicen-borde);
+
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(22, 74, 152, 0.06);
+}
+
+.seccion-form > legend {
+    width: auto;
+    padding: 0 .5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #021a53;
+}
+
+.seccion-form > legend i {
+    color: var(--sicen-azul-oscuro);
+    margin-right: 0.35rem;
+}
+
+/* Asterisco de campo obligatorio */
+.obligatorio {
+    color: var(--sicen-rojo);
+    font-weight: 700;
+}
+
+/* Foco visible y consistente (accesibilidad: nunca quitar el outline sin reemplazo) */
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+    border-color: var(--sicen-azul);
+    box-shadow: 0 0 0 0.25rem rgba(22, 74, 152, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: var(--sicen-azul);
+    border-color: var(--sicen-azul);
+}
+
+/* ---------- Estados de validación ----------
+   Bootstrap ya colorea .is-invalid y .is-valid; aquí se refuerza el mensaje
+   para que el error NO dependa solo del color (lleva ícono y texto). */
+.invalid-feedback {
+    font-weight: 500;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+    background-color: #fff6f6;
+}
+
+/* Un campo válido no necesita el fondo verde: basta con el borde */
+.form-control.is-valid,
+.form-select.is-valid {
+    background-color: #ffffff;
+}
+
+/* ---------- Barra de progreso ---------- */
+.progreso-formulario .progress {
+    height: 10px;
+    border-radius: 10px;
+}
+
+.progreso-formulario .progress-bar {
+    transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+/* ---------- Contador de caracteres ---------- */
+.contador {
+    color: #5c6b80;
+    transition: color 0.2s;
+}
+
+/* ---------- Insignias de formularios seleccionados ---------- */
+.contenedor-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+    padding: 0.5rem;
+    border: 1px dashed var(--sicen-borde);
+    border-radius: 8px;
+    background: #fafcff;
+}
+
+.badge-formulario {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background-color: var(--sicen-azul-claro);
+    color: var(--sicen-azul);
+    border: 1px solid #9cc8ff;
+    font-weight: 600;
+    padding: 0.4rem 0.4rem 0.4rem 0.65rem;
+}
+
+.btn-quitar-badge {
+    border: none;
+    background: transparent;
+    color: var(--sicen-azul);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0 0.3rem;
+    border-radius: 50%;
+}
+
+.btn-quitar-badge:hover,
+.btn-quitar-badge:focus-visible {
+    background: var(--sicen-azul);
+    color: #ffffff;
+}
+
+/* ---------- Filas de responsables (creadas con JS) ---------- */
+.fila-responsable {
+    background: #f8fafd;
+    border: 1px solid var(--sicen-borde);
+    border-radius: 10px;
+    padding: 0.75rem;
+    margin: 0 0 0.75rem 0;
+}
+
+/* ---------- Animaciones que JS activa agregando clases ---------- */
+.aparecer {
+    animation: aparecer 0.3s ease-out;
+}
+
+.desaparecer {
+    animation: desaparecer 0.25s ease-in forwards;
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes desaparecer {
+    to { opacity: 0; transform: translateX(20px); }
+}
+
+/* Respeta a quienes configuraron "reducir movimiento" en su sistema */
+@media (prefers-reduced-motion: reduce) {
+    .aparecer,
+    .desaparecer {
+        animation-duration: 0.01ms;
+    }
+}
+
+/* ---------- Modal de Bootstrap: resumen ---------- */
+.resumen-errores .btn-link {
+    color: var(--sicen-rojo);
+    text-decoration: none;
+}
+
+.resumen-errores .btn-link:hover,
+.resumen-errores .btn-link:focus-visible {
+    text-decoration: underline;
+}
+
+.resumen-datos dt {
+    color: var(--sicen-azul);
+}
+
+.resumen-datos dd {
+    margin-bottom: 0.5rem;
+}
+
+/* ---------- SweetAlert2: lista de errores ---------- */
+.lista-errores-swal {
+    text-align: left;
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.95rem;
+}
+
+.lista-errores-swal li {
+    margin-bottom: 0.4rem;
+}
+
+/* ---------- Demo de alert() ---------- */
+.demo-alert {
+    background: #fffbea;
+    border-left: 5px solid #c7ac19;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+}
