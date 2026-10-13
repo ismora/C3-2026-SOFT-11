@@ -1,0 +1,413 @@
+/* ---------- 1. Variables ---------- */
+:root {
+    --color-acento: #1f6e64;        /* verde azulado de los pasos */
+    --color-acento-claro: #e7f2f0;
+    --color-enlace: #2e3d8c;        /* azul marino de "añadir ..." */
+    --color-titulo: #4a4a4a;        /* títulos */
+    --color-texto: #555555;         /* etiquetas y texto */
+    --color-suave: #767676;         /* ayudas y placeholders (contraste mínimo 4.5:1) */
+    --color-borde: #b9b9b9;         /* bordes de los campos */
+    --color-linea: #cfcfcf;         /* línea vertical de las secciones */
+    --color-error: #c0392b;
+    --color-exito: #2e7d4f;
+
+    --ancho-etiqueta: 190px;        /* columna izquierda con el nombre de la sección */
+
+    /* Variables de Bootstrap: sus componentes toman estos colores */
+    --bs-body-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --bs-body-color: var(--color-texto);
+    --bs-primary: #2e3d8c;
+    --bs-primary-rgb: 46, 61, 140;
+    --bs-border-color: var(--color-borde);
+    --bs-form-invalid-color: var(--color-error);
+    --bs-form-invalid-border-color: var(--color-error);
+    --bs-form-valid-color: var(--color-exito);
+    --bs-form-valid-border-color: var(--color-exito);
+}
+
+body {
+    background-color: #ffffff;
+    color: var(--color-texto);
+    font-size: 0.95rem;
+}
+
+main.container {
+    max-width: 960px;               
+}
+
+
+/* ---------- 2. Encabezado ---------- */
+/* El prototipo no usa una franja de color: el encabezado es blanco
+   con el título gris centrado y una línea inferior. */
+.encabezado-sicen {
+    background: #ffffff;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+/* Logo arriba y título debajo, todo centrado */
+.encabezado-sicen .container {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem !important;          /* reemplaza el gap-3 de Bootstrap */
+}
+
+/* Bootstrap usa !important en .text-white y .text-white-50;
+   por eso aquí también se necesita para cambiar el color */
+.encabezado-sicen .text-white {
+    color: var(--color-titulo) !important;
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+
+.encabezado-sicen .text-white-50 {
+    color: var(--color-suave) !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.logo-sicen {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;                 /* evita que el círculo se deforme en celular */
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-acento);
+    color: #ffffff;
+    font-size: 1.2rem;
+}
+
+/* Texto introductorio centrado */
+main > p.text-secondary {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+
+/* ---------- 3. Botones ---------- */
+.btn {
+    border-radius: 4px;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--color-acento);
+    --bs-btn-border-color: var(--color-acento);
+    --bs-btn-hover-bg: #17544c;
+    --bs-btn-hover-border-color: #17544c;
+    --bs-btn-active-bg: #124540;
+    --bs-btn-disabled-bg: var(--color-acento);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--color-acento);
+    --bs-btn-border-color: var(--color-acento);
+    --bs-btn-hover-bg: var(--color-acento);
+    --bs-btn-hover-border-color: var(--color-acento);
+    --bs-btn-active-bg: var(--color-acento);
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--color-texto);
+    --bs-btn-border-color: var(--color-borde);
+    --bs-btn-hover-bg: #f2f2f2;
+    --bs-btn-hover-color: var(--color-titulo);
+    --bs-btn-hover-border-color: var(--color-borde);
+}
+
+#btnAgregarResponsable {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-left: auto;              /* lo empuja a la derecha */
+    padding: 0.25rem 0;
+    border: none;
+    background: transparent;
+    color: var(--color-enlace);
+    font-weight: 500;
+}
+
+#btnAgregarResponsable i {
+    order: 2;                       /* el ícono va después del texto */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-enlace);
+    color: #ffffff;
+    font-size: 0.65rem;
+}
+
+#btnAgregarResponsable:hover,
+#btnAgregarResponsable:focus-visible {
+    text-decoration: underline;
+    background: transparent;
+    color: var(--color-enlace);
+}
+
+#btnAgregarResponsable:disabled {
+    color: var(--color-suave);
+}
+
+#btnAgregarResponsable:disabled i {
+    background: var(--color-suave);
+}
+
+
+/* ---------- 4. Secciones del formulario ---------- */
+/* Cada fieldset es un bloque sin tarjeta; la separación se logra con espacio */
+.seccion-form {
+    border: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+    display: flow-root;             /* contiene el legend flotante */
+}
+
+.seccion-form > legend {
+    float: none;
+    width: auto;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-titulo);
+    margin-bottom: 1rem;
+}
+
+.seccion-form > legend i {
+    display: none;
+}
+
+/* Etiquetas de los campos */
+.form-label {
+    color: var(--color-texto);
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+}
+
+.obligatorio {
+    color: var(--color-error);
+    font-weight: 700;
+}
+
+.form-text {
+    color: var(--color-suave);
+    font-size: 0.8rem;
+}
+
+
+/* ---------- 5. Diseño de dos columnas (pantallas medianas en adelante) ---------- */
+@media (min-width: 768px) {
+    .seccion-form > legend {
+        float: left;
+        width: var(--ancho-etiqueta);
+        padding-right: 1.25rem;
+        text-align: right;
+        font-size: 0.95rem;
+        line-height: 1.3;
+    }
+
+    /* Todo lo que no es el legend se corre a la derecha y lleva la línea */
+    .seccion-form > :not(legend) {
+        margin-left: var(--ancho-etiqueta);
+        padding-left: 1.5rem;
+        border-left: 1px solid var(--color-linea);
+    }
+
+    /* .row de Bootstrap tiene márgenes negativos: se ajusta para alinearla */
+    .seccion-form > .row {
+        margin-right: 0;
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+    }
+
+    /* El botón "Agregar" va a la derecha y sin línea vertical */
+    .seccion-form > #btnAgregarResponsable {
+        border-left: none;
+    }
+}
+
+
+/* ---------- 6. Campos ---------- */
+.form-control,
+.form-select {
+    border: 1px solid var(--color-borde);
+    border-radius: 3px;
+    color: var(--color-titulo);
+    padding: 0.55rem 0.75rem;
+}
+
+.form-control::placeholder {
+    color: var(--color-suave);
+    opacity: 1;
+}
+
+.input-group-text {
+    background: #f5f5f5;
+    border-color: var(--color-borde);
+    border-radius: 3px;
+    color: var(--color-texto);
+}
+
+/* Foco visible (accesibilidad): nunca quitar el contorno sin reemplazarlo */
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+    border-color: var(--color-acento);
+    box-shadow: 0 0 0 3px rgba(31, 110, 100, 0.2);
+}
+
+.form-check-input {
+    border-color: var(--color-borde);
+}
+
+.form-check-input:checked {
+    background-color: var(--color-acento);
+    border-color: var(--color-acento);
+}
+
+.form-check-label {
+    color: var(--color-texto);
+}
+
+textarea.form-control {
+    min-height: 90px;
+}
+
+
+/* ---------- 7. Estados de validación (clases que agrega JS) ---------- */
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: var(--color-error);
+    background-color: #fff8f7;
+}
+
+/* Un campo correcto solo cambia el borde: sin fondo verde */
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: var(--color-exito);
+}
+
+.invalid-feedback {
+    color: var(--color-error);
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+/* Ícono antes del mensaje: el error no depende solo del color */
+.invalid-feedback:not(:empty)::before {
+    content: "⚠ ";
+}
+
+
+/* ---------- 8. Barra de progreso (similar a los pasos ①···② del prototipo) ---------- */
+.progreso-formulario {
+    max-width: 420px;
+    margin: 0 auto 2rem;
+    text-align: center;
+}
+
+.progreso-formulario .progress {
+    height: 6px;
+    border-radius: 6px;
+    background: #e6e6e6;
+}
+
+.progreso-formulario .progress-bar {
+    transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+/* JS agrega bg-danger / bg-warning / bg-success; se usan tonos más sobrios */
+.progreso-formulario .progress-bar.bg-danger  { background-color: #b5b5b5 !important; }
+.progreso-formulario .progress-bar.bg-warning { background-color: #6fa79f !important; }
+.progreso-formulario .progress-bar.bg-success { background-color: var(--color-acento) !important; }
+
+
+/* ---------- 9. Contador de caracteres ---------- */
+.contador {
+    color: var(--color-suave);
+    font-size: 0.8rem;
+}
+
+
+/* ---------- 10. Insignias de formularios seleccionados ---------- */
+.contenedor-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.4rem;
+    min-height: 2.6rem;
+    padding: 0.5rem;
+    border: 1px dashed var(--color-borde);
+    border-radius: 3px;
+}
+
+.badge-formulario {
+    background: var(--color-acento-claro);
+    color: var(--color-acento);
+    border: 1px solid #b8d8d3;
+    border-radius: 20px;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+}
+
+
+/* ---------- 11. Filas de responsables (creadas con JS) ---------- */
+.fila-responsable {
+    margin: 0 0 1rem 0;
+    padding: 0 0 1rem 0;
+    border-bottom: 1px dashed var(--color-linea);
+}
+
+
+/* ---------- 12. Animaciones que JS activa con clases ---------- */
+.aparecer {
+    animation: aparecer 0.3s ease-out;
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Respeta a quienes configuraron "reducir movimiento" en su sistema */
+@media (prefers-reduced-motion: reduce) {
+    .aparecer {
+        animation: none;
+    }
+}
+
+
+/* ---------- 13. Modal de Bootstrap ---------- */
+.modal-content {
+    border: none;
+    border-radius: 6px;
+}
+
+.modal-header {
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.modal-title {
+    color: var(--color-titulo);
+    font-weight: 700;
+}
+
+.modal-body .list-group-item {
+    border-color: #ececec;
+    color: var(--color-texto);
+}
+
+.modal-body .list-group-item strong {
+    color: var(--color-titulo);
+}
+
+
+/* ---------- 14. Botones de acción al final ---------- */
+form > .d-flex:last-child {
+    border-top: 1px solid #e3e3e3;
+    padding-top: 1.5rem;
+}
