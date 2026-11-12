@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos los registros | Gestión de Personal</title>
+
+    <!-- Íconos: Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Estilos propios del sistema -->
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+    <!-- Permite saltar el menú con el teclado (accesibilidad) -->
+    <a href="#contenido" class="saltar">Saltar al contenido</a>
+
+    <div class="franja-superior"></div>
+
+    <!-- ===================== ENCABEZADO ===================== -->
+    <header class="encabezado">
+        <a href="index.html" class="logo">
+            <span class="logo-marca" aria-hidden="true">GP</span>
+            <span class="logo-texto">Sistema de Gestión<br>de Personal</span>
+        </a>
+
+        <div class="herramientas" role="group" aria-label="Herramientas de accesibilidad">
+            <span>Tamaño de letra:</span>
+            <button type="button" id="btnLetraMenos" class="btn-herramienta" aria-label="Disminuir el tamaño de letra">-</button>
+            <button type="button" id="btnLetraNormal" class="btn-herramienta" aria-label="Tamaño de letra normal">A</button>
+            <button type="button" id="btnLetraMas" class="btn-herramienta" aria-label="Aumentar el tamaño de letra">+</button>
+            <span class="separador-herramientas"></span>
+            <button type="button" id="btnContraste" class="btn-herramienta" aria-label="Modo oscuro" aria-pressed="false">
+                <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===================== MENÚ PRINCIPAL ===================== -->
+    <nav class="menu-principal" aria-label="Menú principal">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="empleados.html">Empleados</a></li>
+            <li><a href="certificacion-registrar.html">Certificaciones</a></li>
+            <li><a href="proyecto-registrar.html">Proyectos</a></li>
+            <li><a href="busqueda.html">Búsqueda</a></li>
+            <li><a href="listados.html" class="activo" aria-current="true">Listados</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===================== MIGAS DE PAN ===================== -->
+    <nav class="migas" aria-label="Ruta de navegación">
+        <ol>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="listados.html">Listados</a></li>
+            <li aria-current="page">Todos los registros</li>
+        </ol>
+    </nav>
+
+    <main class="contenedor" id="contenido">
+
+        <!-- ===================== MENÚ LATERAL ===================== -->
+        <aside class="menu-lateral">
+            <nav aria-label="Opciones de listados">
+                <ul>
+                <li><a href="listados.html" class="activo" aria-current="page">Todos los registros</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- ===================== CONTENIDO ===================== -->
+        <section class="contenido" aria-labelledby="tituloPagina">
+            <div class="titulo-pagina">
+                <span class="icono-circulo" aria-hidden="true"><i class="fa-solid fa-table-list"></i></span>
+                <div>
+                    <h1 id="tituloPagina">Listados</h1>
+                    <p class="subtitulo">Todos los registros</p>
+                </div>
+            </div>
+
+            <p class="intro">Consulta de todos los registros guardados en la base de datos.</p>
+
+            <!-- Pestañas: cada botón muestra una tabla y oculta las demás -->
+            <div class="pestannas" role="tablist" aria-label="Tipo de registro">
+                <button type="button" class="pestanna" role="tab" id="tabEmpleados"
+                    aria-controls="pnlEmpleados" aria-selected="true">
+                    <i class="fa-solid fa-users" aria-hidden="true"></i> Empleados <span class="contador" id="cntEmpleados"></span>
+                </button>
+                <button type="button" class="pestanna" role="tab" id="tabCertificaciones"
+                    aria-controls="pnlCertificaciones" aria-selected="false">
+                    <i class="fa-solid fa-award" aria-hidden="true"></i> Certificaciones <span class="contador" id="cntCertificaciones"></span>
+                </button>
+                <button type="button" class="pestanna" role="tab" id="tabProyectos"
+                    aria-controls="pnlProyectos" aria-selected="false">
+                    <i class="fa-solid fa-diagram-project" aria-hidden="true"></i> Proyectos <span class="contador" id="cntProyectos"></span>
+                </button>
+            </div>
+
+            <section class="panel-pestanna" id="pnlEmpleados" role="tabpanel" aria-labelledby="tabEmpleados">
+                <!-- tabindex="0" permite desplazar la tabla con el teclado en pantallas pequeñas -->
+                <div class="tabla-contenedor" tabindex="0" role="region" aria-label="Tabla de empleados, desplazable">
+                    <table class="tabla">
+                        <caption class="solo-lector">Empleados</caption>
+                        <thead>
+                            <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Provincia</th>
+                            <th scope="col">Certificaciones</th>
+                            <th scope="col">Proyectos</th>
+                            </tr>
+                        </thead>
+                        <!-- Las filas se crean con JS -->
+                        <tbody id="tblEmpleados"></tbody>
+                    </table>
+                </div>
+            </section>
+            <section class="panel-pestanna" id="pnlCertificaciones" role="tabpanel" aria-labelledby="tabCertificaciones" hidden>
+                <!-- tabindex="0" permite desplazar la tabla con el teclado en pantallas pequeñas -->
+                <div class="tabla-contenedor" tabindex="0" role="region" aria-label="Tabla de certificaciones, desplazable">
+                    <table class="tabla">
+                        <caption class="solo-lector">Certificaciones</caption>
+                        <thead>
+                            <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Institución</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Vigencia</th>
+                            </tr>
+                        </thead>
+                        <!-- Las filas se crean con JS -->
+                        <tbody id="tblCertificaciones"></tbody>
+                    </table>
+                </div>
+            </section>
+            <section class="panel-pestanna" id="pnlProyectos" role="tabpanel" aria-labelledby="tabProyectos" hidden>
+                <!-- tabindex="0" permite desplazar la tabla con el teclado en pantallas pequeñas -->
+                <div class="tabla-contenedor" tabindex="0" role="region" aria-label="Tabla de proyectos, desplazable">
+                    <table class="tabla">
+                        <caption class="solo-lector">Proyectos</caption>
+                        <thead>
+                            <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Tecnologías</th>
+                            <th scope="col">Inicio</th>
+                            <th scope="col">Fin</th>
+                            </tr>
+                        </thead>
+                        <!-- Las filas se crean con JS -->
+                        <tbody id="tblProyectos"></tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer class="pie">
+        Sistema de Gestión de Personal · Proyecto integrador 1
+    </footer>
+
+    <!-- SweetAlert2: ventanas de mensaje (en lugar de alert) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Funciones comunes (dirección del API, accesibilidad, mensajes) -->
+    <script src="js/comun.js"></script>
+    <!-- Lógica de esta página -->
+    <script src="js/listados.js"></script>
+</body>
+
+</html>

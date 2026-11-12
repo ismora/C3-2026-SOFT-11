@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen general | Gestión de Personal</title>
+
+    <!-- Íconos: Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Estilos propios del sistema -->
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+    <!-- Permite saltar el menú con el teclado (accesibilidad) -->
+    <a href="#contenido" class="saltar">Saltar al contenido</a>
+
+    <div class="franja-superior"></div>
+
+    <!-- ===================== ENCABEZADO ===================== -->
+    <header class="encabezado">
+        <a href="index.html" class="logo">
+            <span class="logo-marca" aria-hidden="true">GP</span>
+            <span class="logo-texto">Sistema de Gestión<br>de Personal</span>
+        </a>
+
+        <div class="herramientas" role="group" aria-label="Herramientas de accesibilidad">
+            <span>Tamaño de letra:</span>
+            <button type="button" id="btnLetraMenos" class="btn-herramienta" aria-label="Disminuir el tamaño de letra">-</button>
+            <button type="button" id="btnLetraNormal" class="btn-herramienta" aria-label="Tamaño de letra normal">A</button>
+            <button type="button" id="btnLetraMas" class="btn-herramienta" aria-label="Aumentar el tamaño de letra">+</button>
+            <span class="separador-herramientas"></span>
+            <button type="button" id="btnContraste" class="btn-herramienta" aria-label="Modo oscuro" aria-pressed="false">
+                <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===================== MENÚ PRINCIPAL ===================== -->
+    <nav class="menu-principal" aria-label="Menú principal">
+        <ul>
+            <li><a href="index.html" class="activo" aria-current="true">Inicio</a></li>
+            <li><a href="empleados.html">Empleados</a></li>
+            <li><a href="certificacion-registrar.html">Certificaciones</a></li>
+            <li><a href="proyecto-registrar.html">Proyectos</a></li>
+            <li><a href="busqueda.html">Búsqueda</a></li>
+            <li><a href="listados.html">Listados</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===================== MIGAS DE PAN ===================== -->
+    <nav class="migas" aria-label="Ruta de navegación">
+        <ol>
+            <li aria-current="page">Inicio</li>
+        </ol>
+    </nav>
+
+    <main class="contenedor" id="contenido">
+
+        <!-- ===================== CONTENIDO ===================== -->
+        <section class="contenido" aria-labelledby="tituloPagina">
+            <div class="titulo-pagina">
+                <span class="icono-circulo" aria-hidden="true"><i class="fa-solid fa-chart-pie"></i></span>
+                <div>
+                    <h1 id="tituloPagina">Inicio</h1>
+                    <p class="subtitulo">Resumen general</p>
+                </div>
+
+                <button type="button" class="btn btn-secundario boton-titulo" id="btnActualizar">
+                    <i class="fa-solid fa-rotate" aria-hidden="true"></i>Actualizar
+                </button>
+            </div>
+
+            <p class="intro" id="txtActualizado" aria-live="polite">Cargando datos…</p>
+
+            <!-- ============ TARJETAS CON LOS TOTALES ============ -->
+            <!-- Cada tarjeta es un enlace a la pantalla con el detalle -->
+            <div class="tarjetas">
+                <a class="tarjeta" href="empleados.html">
+                    <span class="tarjeta-encabezado">
+                        <i class="fa-solid fa-users" aria-hidden="true"></i> Empleados
+                    </span>
+                    <span class="tarjeta-valor" id="valEmpleados">–</span>
+                    <span class="tarjeta-detalle" id="detEmpleados"></span>
+                </a>
+
+                <a class="tarjeta" href="certificaciones-instituciones.html">
+                    <span class="tarjeta-encabezado">
+                        <i class="fa-solid fa-award" aria-hidden="true"></i> Certificaciones
+                    </span>
+                    <span class="tarjeta-valor" id="valCertificaciones">–</span>
+                    <span class="tarjeta-detalle" id="detCertificaciones"></span>
+                </a>
+
+                <a class="tarjeta" href="proyecto-registrar.html">
+                    <span class="tarjeta-encabezado">
+                        <i class="fa-solid fa-diagram-project" aria-hidden="true"></i> Proyectos
+                    </span>
+                    <span class="tarjeta-valor" id="valProyectos">–</span>
+                    <span class="tarjeta-detalle" id="detProyectos"></span>
+                </a>
+
+                <a class="tarjeta tarjeta-aviso" href="certificaciones-por-vencer.html">
+                    <span class="tarjeta-encabezado">
+                        <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Por vencer
+                    </span>
+                    <span class="tarjeta-valor" id="valPorVencer">–</span>
+                    <span class="tarjeta-detalle" id="detPorVencer"></span>
+                </a>
+            </div>
+
+            <!-- ============ PANELES CON BARRAS Y LISTAS ============ -->
+            <div class="paneles">
+                <section class="panel" aria-labelledby="ttlEstados">
+                    <h2 id="ttlEstados">Proyectos por estado</h2>
+                    <ul class="barras" id="lstEstados"></ul>
+                </section>
+
+                <section class="panel" aria-labelledby="ttlTecnologias">
+                    <h2 id="ttlTecnologias">Tecnologías más usadas</h2>
+                    <p class="panel-nota">Cantidad de proyectos que usan cada tecnología</p>
+                    <ul class="barras" id="lstTecnologias"></ul>
+                </section>
+
+                <section class="panel" aria-labelledby="ttlCertificaciones">
+                    <h2 id="ttlCertificaciones">Certificaciones más comunes</h2>
+                    <p class="panel-nota">Cantidad de empleados que tienen cada certificación</p>
+                    <ul class="barras" id="lstCertificaciones"></ul>
+                </section>
+
+                <section class="panel" aria-labelledby="ttlUltimos">
+                    <h2 id="ttlUltimos">Últimos empleados registrados</h2>
+                    <ul class="lista" id="lstUltimos"></ul>
+                    <a href="empleados.html" class="enlace-panel">Ver el directorio completo ›</a>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <footer class="pie">
+        Sistema de Gestión de Personal · Proyecto integrador 1
+    </footer>
+
+    <!-- SweetAlert2: ventanas de mensaje (en lugar de alert) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Funciones comunes (dirección del API, accesibilidad, mensajes) -->
+    <script src="js/comun.js"></script>
+    <!-- Lógica de esta página -->
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>

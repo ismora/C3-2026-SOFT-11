@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar proyecto | Gestión de Personal</title>
+
+    <!-- Íconos: Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Estilos propios del sistema -->
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+    <!-- Permite saltar el menú con el teclado (accesibilidad) -->
+    <a href="#contenido" class="saltar">Saltar al contenido</a>
+
+    <div class="franja-superior"></div>
+
+    <!-- ===================== ENCABEZADO ===================== -->
+    <header class="encabezado">
+        <a href="index.html" class="logo">
+            <span class="logo-marca" aria-hidden="true">GP</span>
+            <span class="logo-texto">Sistema de Gestión<br>de Personal</span>
+        </a>
+
+        <div class="herramientas" role="group" aria-label="Herramientas de accesibilidad">
+            <span>Tamaño de letra:</span>
+            <button type="button" id="btnLetraMenos" class="btn-herramienta" aria-label="Disminuir el tamaño de letra">-</button>
+            <button type="button" id="btnLetraNormal" class="btn-herramienta" aria-label="Tamaño de letra normal">A</button>
+            <button type="button" id="btnLetraMas" class="btn-herramienta" aria-label="Aumentar el tamaño de letra">+</button>
+            <span class="separador-herramientas"></span>
+            <button type="button" id="btnContraste" class="btn-herramienta" aria-label="Modo oscuro" aria-pressed="false">
+                <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===================== MENÚ PRINCIPAL ===================== -->
+    <nav class="menu-principal" aria-label="Menú principal">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="empleados.html" class="activo" aria-current="true">Empleados</a></li>
+            <li><a href="certificacion-registrar.html">Certificaciones</a></li>
+            <li><a href="proyecto-registrar.html">Proyectos</a></li>
+            <li><a href="busqueda.html">Búsqueda</a></li>
+            <li><a href="listados.html">Listados</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===================== MIGAS DE PAN ===================== -->
+    <nav class="migas" aria-label="Ruta de navegación">
+        <ol>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="empleados.html">Empleados</a></li>
+            <li aria-current="page">Asignar proyecto</li>
+        </ol>
+    </nav>
+
+    <main class="contenedor" id="contenido">
+
+        <!-- ===================== MENÚ LATERAL ===================== -->
+        <aside class="menu-lateral">
+            <nav aria-label="Opciones de empleados">
+                <ul>
+                <li><a href="empleados.html">Directorio</a></li>
+                <li><a href="empleado-registrar.html">Registrar empleado</a></li>
+                <li><a href="asignar-certificacion.html">Asignar certificación</a></li>
+                <li><a href="asignar-proyecto.html" class="activo" aria-current="page">Asignar proyecto</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- ===================== CONTENIDO ===================== -->
+        <section class="contenido" aria-labelledby="tituloPagina">
+            <div class="titulo-pagina">
+                <span class="icono-circulo" aria-hidden="true"><i class="fa-solid fa-diagram-project"></i></span>
+                <div>
+                    <h1 id="tituloPagina">Empleados</h1>
+                    <p class="subtitulo">Asignar proyecto</p>
+                </div>
+            </div>
+
+            <p class="intro">Seleccione el empleado y el proyecto en el que colabora o colaboró.</p>
+
+            <form class="formulario" id="frmAsignar" novalidate>
+                <div class="grupo">
+                    <label for="sltEmpleado">Empleado <span class="obligatorio">*</span></label>
+                    <!-- Las opciones se cargan desde el servidor -->
+                    <select id="sltEmpleado" class="campo" required aria-describedby="errEmpleado"></select>
+                    <p class="texto-error" id="errEmpleado">Seleccione un empleado.</p>
+                </div>
+
+                <div class="grupo">
+                    <label for="sltProyecto">Proyecto <span class="obligatorio">*</span></label>
+                    <select id="sltProyecto" class="campo" required aria-describedby="errProyecto"></select>
+                    <p class="texto-error" id="errProyecto">Seleccione un proyecto.</p>
+                </div>
+
+                <div class="acciones-formulario">
+                    <button type="submit" class="btn"><i class="fa-solid fa-link" aria-hidden="true"></i>Asignar</button>
+                </div>
+            </form>
+
+            <!-- Se muestra después de asignar: lo que tiene ahora el empleado -->
+            <div class="panel-resultado oculto" id="pnlResultado" aria-live="polite">
+                <h2 id="txtTituloResultado"></h2>
+                <ul class="lista" id="lstAsignados"></ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="pie">
+        Sistema de Gestión de Personal · Proyecto integrador 1
+    </footer>
+
+    <!-- SweetAlert2: ventanas de mensaje (en lugar de alert) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Funciones comunes (dirección del API, accesibilidad, mensajes) -->
+    <script src="js/comun.js"></script>
+    <!-- Lógica de esta página -->
+    <script src="js/asignar-proyecto.js"></script>
+</body>
+
+</html>

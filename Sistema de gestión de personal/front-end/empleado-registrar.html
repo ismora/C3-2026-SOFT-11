@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar empleado | Gestión de Personal</title>
+
+    <!-- Íconos: Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Estilos propios del sistema -->
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+    <!-- Permite saltar el menú con el teclado (accesibilidad) -->
+    <a href="#contenido" class="saltar">Saltar al contenido</a>
+
+    <div class="franja-superior"></div>
+
+    <!-- ===================== ENCABEZADO ===================== -->
+    <header class="encabezado">
+        <a href="index.html" class="logo">
+            <span class="logo-marca" aria-hidden="true">GP</span>
+            <span class="logo-texto">Sistema de Gestión<br>de Personal</span>
+        </a>
+
+        <div class="herramientas" role="group" aria-label="Herramientas de accesibilidad">
+            <span>Tamaño de letra:</span>
+            <button type="button" id="btnLetraMenos" class="btn-herramienta" aria-label="Disminuir el tamaño de letra">-</button>
+            <button type="button" id="btnLetraNormal" class="btn-herramienta" aria-label="Tamaño de letra normal">A</button>
+            <button type="button" id="btnLetraMas" class="btn-herramienta" aria-label="Aumentar el tamaño de letra">+</button>
+            <span class="separador-herramientas"></span>
+            <button type="button" id="btnContraste" class="btn-herramienta" aria-label="Modo oscuro" aria-pressed="false">
+                <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===================== MENÚ PRINCIPAL ===================== -->
+    <nav class="menu-principal" aria-label="Menú principal">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="empleados.html" class="activo" aria-current="true">Empleados</a></li>
+            <li><a href="certificacion-registrar.html">Certificaciones</a></li>
+            <li><a href="proyecto-registrar.html">Proyectos</a></li>
+            <li><a href="busqueda.html">Búsqueda</a></li>
+            <li><a href="listados.html">Listados</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===================== MIGAS DE PAN ===================== -->
+    <nav class="migas" aria-label="Ruta de navegación">
+        <ol>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="empleados.html">Empleados</a></li>
+            <li aria-current="page">Registrar empleado</li>
+        </ol>
+    </nav>
+
+    <main class="contenedor" id="contenido">
+
+        <!-- ===================== MENÚ LATERAL ===================== -->
+        <aside class="menu-lateral">
+            <nav aria-label="Opciones de empleados">
+                <ul>
+                <li><a href="empleados.html">Directorio</a></li>
+                <li><a href="empleado-registrar.html" class="activo" aria-current="page">Registrar empleado</a></li>
+                <li><a href="asignar-certificacion.html">Asignar certificación</a></li>
+                <li><a href="asignar-proyecto.html">Asignar proyecto</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- ===================== CONTENIDO ===================== -->
+        <section class="contenido" aria-labelledby="tituloPagina">
+            <div class="titulo-pagina">
+                <span class="icono-circulo" aria-hidden="true"><i class="fa-solid fa-user-plus"></i></span>
+                <div>
+                    <h1 id="tituloPagina">Empleados</h1>
+                    <p class="subtitulo">Registrar empleado</p>
+                </div>
+            </div>
+
+            <p class="intro">Los campos marcados con <span class="obligatorio">*</span> son obligatorios.</p>
+
+            <!-- novalidate: la validación la hace nuestro JS, no el navegador -->
+            <form class="formulario" id="frmEmpleado" novalidate>
+                <div class="grupo">
+                    <label for="txtNombre">Nombre completo <span class="obligatorio">*</span></label>
+                    <input type="text" id="txtNombre" class="campo" required aria-describedby="errNombre">
+                    <p class="texto-error" id="errNombre">Escriba el nombre del empleado.</p>
+                </div>
+
+                <div class="grupo">
+                    <label for="txtCorreo">Correo <span class="obligatorio">*</span></label>
+                    <input type="email" id="txtCorreo" class="campo" required aria-describedby="errCorreo"
+                        placeholder="nombre@empresa.com">
+                    <p class="texto-error" id="errCorreo">Escriba un correo válido, por ejemplo nombre@empresa.com.</p>
+                </div>
+
+                <div class="grupo">
+                    <label for="txtContrasenna">Contraseña <span class="obligatorio">*</span></label>
+                    <input type="password" id="txtContrasenna" class="campo" required
+                        aria-describedby="ayudaContrasenna errContrasenna">
+                    <p class="ayuda" id="ayudaContrasenna">Mínimo 8 caracteres.</p>
+                    <p class="texto-error" id="errContrasenna">La contraseña debe tener al menos 8 caracteres.</p>
+                </div>
+
+                <fieldset class="grupo">
+                    <legend>Dirección</legend>
+
+                    <div class="grupo">
+                        <label for="sltProvincia">Provincia <span class="obligatorio">*</span></label>
+                        <select id="sltProvincia" class="campo" required aria-describedby="errProvincia">
+                            <option value="">Seleccione una provincia</option>
+                            <option>San José</option>
+                            <option>Alajuela</option>
+                            <option>Cartago</option>
+                            <option>Heredia</option>
+                            <option>Guanacaste</option>
+                            <option>Puntarenas</option>
+                            <option>Limón</option>
+                        </select>
+                        <p class="texto-error" id="errProvincia">Seleccione la provincia.</p>
+                    </div>
+
+                    <div class="grupo-doble">
+                        <div class="grupo">
+                            <label for="txtCanton">Cantón <span class="obligatorio">*</span></label>
+                            <input type="text" id="txtCanton" class="campo" required aria-describedby="errCanton">
+                            <p class="texto-error" id="errCanton">Escriba el cantón.</p>
+                        </div>
+                        <div class="grupo">
+                            <label for="txtDistrito">Distrito <span class="obligatorio">*</span></label>
+                            <input type="text" id="txtDistrito" class="campo" required aria-describedby="errDistrito">
+                            <p class="texto-error" id="errDistrito">Escriba el distrito.</p>
+                        </div>
+                    </div>
+
+                    <div class="grupo">
+                        <label for="txtUbicacion">Otras señas</label>
+                        <textarea id="txtUbicacion" class="campo" rows="2"></textarea>
+                    </div>
+                </fieldset>
+
+                <div class="acciones-formulario">
+                    <button type="submit" class="btn"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>Guardar</button>
+                    <button type="reset" class="btn btn-secundario">Limpiar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="pie">
+        Sistema de Gestión de Personal · Proyecto integrador 1
+    </footer>
+
+    <!-- SweetAlert2: ventanas de mensaje (en lugar de alert) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Funciones comunes (dirección del API, accesibilidad, mensajes) -->
+    <script src="js/comun.js"></script>
+    <!-- Lógica de esta página -->
+    <script src="js/empleado-registrar.js"></script>
+</body>
+
+</html>

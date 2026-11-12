@@ -1,0 +1,964 @@
+/* =====================================================================
+   Sistema de Gestión de Personal: estilos generales
+   Diseño inspirado en los portales institucionales accesibles:
+   barra azul, menú lateral gris, listas con separadores y paginación.
+   ===================================================================== */
+
+/* ---------- Variables de color (se cambian en el modo oscuro) ---------- */
+:root {
+    --azul-menu: #48589b;        /* barra del menú principal */
+    --azul-activo: #1f2a50;      /* opción activa del menú */
+    --azul-titulo: #3f4f8f;      /* títulos y enlaces */
+    --gris-lateral: #e9eef0;     /* fondo del menú lateral */
+    --gris-boton: #e6e8eb;       /* botones de acción de cada fila */
+    --borde: #d6dae0;            /* líneas separadoras */
+    --texto: #2f2f2f;
+    --texto-suave: #555b66;
+    --fondo: #ffffff;
+    --fondo-campo: #ffffff;
+    --rojo: #c0392b;
+    --verde: #1e7e4f;
+    --amarillo: #8a6d00;
+    --barra: #48589b;            /* barras del panel principal */
+}
+
+/* Modo oscuro: solo se cambian las variables */
+body.oscuro {
+    --azul-menu: #2b3561;
+    --azul-activo: #0f1530;
+    --azul-titulo: #a9b8ff;
+    --gris-lateral: #252a36;
+    --gris-boton: #343a48;
+    --borde: #454c5c;
+    --texto: #eceef2;
+    --texto-suave: #c3c8d2;
+    --fondo: #181b22;
+    --fondo-campo: #222631;
+    --rojo: #ff8a7a;
+    --verde: #6fdba5;
+    --amarillo: #f2cf5b;
+    --barra: #7584d8;
+}
+
+/* ---------- Base ---------- */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;             /* lo cambian los botones - A + */
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
+    color: var(--texto);
+    background: var(--fondo);
+    line-height: 1.45;
+}
+
+a {
+    color: var(--azul-titulo);
+}
+
+/* Contorno visible al navegar con el teclado */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #f2a900;
+    outline-offset: 2px;
+}
+
+/* Texto solo para lectores de pantalla */
+.solo-lector {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* Enlace para saltar al contenido (aparece al presionar Tab) */
+.saltar {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--azul-activo);
+    color: #ffffff;
+    padding: 8px 14px;
+    z-index: 10;
+}
+
+.saltar:focus {
+    left: 10px;
+}
+
+/* =====================================================================
+   ENCABEZADO
+   ===================================================================== */
+.franja-superior {
+    height: 40px;
+    background: #f7f7f7;
+    border-bottom: 1px solid var(--borde);
+}
+
+body.oscuro .franja-superior {
+    background: #11131a;
+}
+
+.encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 14px 20px;
+    background: var(--fondo);
+}
+
+/* Logo: dos letras con puntos de colores + nombre del sistema */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--texto);
+}
+
+.logo-marca {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--azul-menu);
+    border: 3px solid #d62e2e;
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.logo-texto {
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+/* Herramientas de accesibilidad: tamaño de letra y modo oscuro */
+.herramientas {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+}
+
+.btn-herramienta {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    background: var(--fondo);
+    color: var(--texto);
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.btn-herramienta:hover {
+    background: var(--gris-lateral);
+}
+
+.separador-herramientas {
+    width: 14px;
+}
+
+/* =====================================================================
+   MENÚ PRINCIPAL (barra azul)
+   ===================================================================== */
+.menu-principal ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--azul-menu);
+}
+
+.menu-principal li {
+    flex: 1 1 auto;
+}
+
+.menu-principal a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 18px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.menu-principal a:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.menu-principal a.activo {
+    background: var(--azul-activo);
+    font-weight: bold;
+}
+
+/* =====================================================================
+   MIGAS DE PAN (Inicio / Empleados / Directorio)
+   ===================================================================== */
+.migas ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 12px 20px 12px 54px;
+    list-style: none;
+    font-size: 0.85rem;
+}
+
+.migas li:not(:last-child)::after {
+    content: "/";
+    margin-left: 6px;
+    color: var(--texto-suave);
+}
+
+.migas a {
+    color: var(--texto);
+    text-decoration: none;
+}
+
+.migas a:hover {
+    text-decoration: underline;
+}
+
+.migas [aria-current="page"] {
+    color: var(--azul-titulo);
+    font-weight: bold;
+}
+
+/* =====================================================================
+   DISTRIBUCIÓN: menú lateral + contenido
+   ===================================================================== */
+.contenedor {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 16px 48px;
+}
+
+.menu-lateral {
+    flex: 0 0 185px;
+}
+
+.menu-lateral ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--gris-lateral);
+}
+
+.menu-lateral a {
+    display: block;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--fondo);
+    border-left: 5px solid transparent;
+    color: var(--texto);
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.menu-lateral a:hover {
+    background: rgba(63, 79, 143, 0.08);
+}
+
+.menu-lateral a.activo {
+    border-left-color: var(--azul-titulo);
+    color: var(--azul-titulo);
+    font-weight: bold;
+}
+
+.contenido {
+    flex: 1;
+    min-width: 0;                /* evita que una tabla ancha rompa el diseño */
+}
+
+/* ---------- Título de la página con ícono circular ---------- */
+.titulo-pagina {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #8c8f96;
+}
+
+.icono-circulo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 2px solid var(--azul-titulo);
+    border-radius: 50%;
+    color: var(--azul-titulo);
+    font-size: 1.05rem;
+    flex-shrink: 0;
+}
+
+.titulo-pagina h1 {
+    margin: 0;
+    font-size: 1.45rem;
+    color: var(--azul-titulo);
+    line-height: 1.1;
+}
+
+.subtitulo {
+    margin: 2px 0 0 0;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: var(--azul-titulo);
+}
+
+/* Buscador con el ícono en un cuadro oscuro */
+.buscador {
+    display: flex;
+    margin-left: auto;
+    border: 1px solid #444;
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.buscador label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    background: #333;
+    color: #ffffff;
+    font-size: 0.75rem;
+}
+
+.buscador input {
+    width: 160px;
+    padding: 4px 8px;
+    border: none;
+    font-size: 0.8rem;
+    background: var(--fondo-campo);
+    color: var(--texto);
+}
+
+/* =====================================================================
+   LISTA DE RESULTADOS (filas con nombre, detalle y botones)
+   ===================================================================== */
+.resumen-lista {
+    margin: 18px 12px 8px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fila {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 12px 12px 28px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.fila-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.fila-titulo {
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: bold;
+}
+
+.fila-detalle {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--texto-suave);
+    overflow-wrap: anywhere;
+}
+
+.fila-acciones {
+    display: flex;
+    gap: 8px;
+}
+
+/* Botón cuadrado gris con ícono (ver, eliminar…) */
+.btn-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 6px;
+    background: var(--gris-boton);
+    color: var(--texto);
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.btn-icono:hover {
+    filter: brightness(0.92);
+}
+
+.btn-icono.peligro:hover {
+    color: var(--rojo);
+}
+
+/* Etiquetas pequeñas (certificaciones, tecnologías, estados) */
+.etiqueta {
+    display: inline-block;
+    margin: 4px 4px 0 0;
+    padding: 1px 8px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background: var(--gris-lateral);
+    font-size: 0.72rem;
+    color: var(--texto);
+}
+
+.etiqueta.alerta {
+    border-color: var(--amarillo);
+    color: var(--amarillo);
+    font-weight: bold;
+}
+
+.lista-vacia {
+    padding: 24px 12px;
+    text-align: center;
+    color: var(--texto-suave);
+}
+
+/* ---------- Paginación ---------- */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 26px;
+}
+
+.paginacion button {
+    min-width: 28px;
+    padding: 4px 6px;
+    border: none;
+    background: none;
+    color: var(--texto);
+    cursor: pointer;
+    font-size: 0.82rem;
+}
+
+.paginacion button:disabled {
+    color: var(--texto-suave);
+    opacity: 0.5;
+    cursor: default;
+}
+
+.paginacion button.pagina-actual {
+    color: var(--azul-titulo);
+    font-size: 1.05rem;
+    font-weight: bold;
+}
+
+/* =====================================================================
+   FORMULARIOS
+   ===================================================================== */
+.formulario {
+    max-width: 620px;
+    margin-top: 22px;
+}
+
+.intro {
+    margin: 18px 0 0 0;
+    color: var(--texto-suave);
+}
+
+.grupo {
+    margin-bottom: 16px;
+}
+
+.grupo-doble {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 16px;
+}
+
+.grupo label,
+.grupo legend {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.obligatorio {
+    color: var(--rojo);
+}
+
+.campo {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #9aa0aa;
+    border-radius: 4px;
+    background: var(--fondo-campo);
+    color: var(--texto);
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+
+.campo:focus {
+    border-color: var(--azul-titulo);
+}
+
+.ayuda {
+    margin: 4px 0 0 0;
+    font-size: 0.75rem;
+    color: var(--texto-suave);
+}
+
+/* Campo con error: borde rojo y se muestra su mensaje */
+.campo.invalido {
+    border: 2px solid var(--rojo);
+}
+
+.texto-error {
+    display: none;
+    margin: 4px 0 0 0;
+    font-size: 0.78rem;
+    color: var(--rojo);
+    font-weight: bold;
+}
+
+.campo.invalido ~ .texto-error {
+    display: block;
+}
+
+/* Grupo de casillas con error (por ejemplo, ninguna marcada) */
+.grupo.con-error {
+    border: 2px solid var(--rojo);
+}
+
+.grupo.con-error > .texto-error {
+    display: block;
+}
+
+fieldset.grupo {
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    padding: 12px 16px 4px;
+}
+
+fieldset.grupo legend {
+    padding: 0 6px;
+}
+
+/* label.casilla: casilla con su texto (más específico que ".grupo label") */
+.grupo label.casilla,
+.casilla {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-weight: normal;
+}
+
+.casilla input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+/* Lista de casillas en columnas (tecnologías, certificaciones) */
+.opciones-casillas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 2px 12px;
+}
+
+.opciones-casillas .casilla {
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+}
+
+/* Elemento oculto (se muestra u oculta con JS) */
+.oculto {
+    display: none;
+}
+
+/* ---------- Botones ---------- */
+.acciones-formulario {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    border: 1px solid var(--azul-menu);
+    border-radius: 4px;
+    background: var(--azul-menu);
+    color: #ffffff;
+    font-size: 0.88rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn:hover {
+    background: var(--azul-activo);
+}
+
+.btn-secundario {
+    background: var(--fondo);
+    color: var(--azul-titulo);
+    border-color: var(--azul-titulo);
+}
+
+.btn-secundario:hover {
+    background: var(--gris-lateral);
+}
+
+/* Formulario en una sola línea (filtros de los reportes) */
+.filtro-linea {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+.filtro-linea .grupo {
+    margin-bottom: 0;
+}
+
+.filtro-linea .campo {
+    width: 120px;
+}
+
+/* Resultado que aparece debajo de un formulario */
+.panel-resultado {
+    margin-top: 28px;
+}
+
+.panel-resultado h2 {
+    margin: 0 0 6px 0;
+    font-size: 1rem;
+    color: var(--azul-titulo);
+}
+
+/* Barra horizontal para el reporte de instituciones */
+.barra {
+    height: 10px;
+    margin-top: 6px;
+    border-radius: 5px;
+    background: var(--azul-menu);
+}
+
+/* =====================================================================
+   PANEL PRINCIPAL (dashboard)
+   ===================================================================== */
+.boton-titulo {
+    margin-left: auto;
+}
+
+/* ---------- Tarjetas con los totales ---------- */
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.tarjeta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 18px;
+    border: 1px solid var(--borde);
+    border-left: 5px solid var(--azul-titulo);
+    border-radius: 6px;
+    background: var(--fondo);
+    color: var(--texto);
+    text-decoration: none;
+}
+
+.tarjeta:hover {
+    background: var(--gris-lateral);
+}
+
+.tarjeta-encabezado {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--texto-suave);
+}
+
+.tarjeta-encabezado i {
+    margin-right: 4px;
+    color: var(--azul-titulo);
+}
+
+.tarjeta-valor {
+    font-size: 2.1rem;
+    font-weight: bold;
+    line-height: 1.1;
+    color: var(--texto);
+}
+
+.tarjeta-detalle {
+    font-size: 0.78rem;
+    color: var(--texto-suave);
+}
+
+/* Tarjeta de aviso: borde e ícono amarillos (el texto sigue en su color normal) */
+.tarjeta-aviso {
+    border-left-color: var(--amarillo);
+}
+
+.tarjeta-aviso .tarjeta-encabezado i {
+    color: var(--amarillo);
+}
+
+/* ---------- Paneles ---------- */
+.paneles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.panel {
+    padding: 16px 18px;
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    min-width: 0;
+}
+
+.panel h2 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--azul-titulo);
+}
+
+.panel-nota {
+    margin: 2px 0 0 0;
+    font-size: 0.75rem;
+    color: var(--texto-suave);
+}
+
+.panel .fila {
+    padding-left: 4px;
+}
+
+.enlace-panel {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.82rem;
+    font-weight: bold;
+}
+
+/* ---------- Barras horizontales ---------- */
+.barras {
+    margin: 12px 0 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.barras li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 10px;
+    margin-bottom: 12px;
+    font-size: 0.82rem;
+}
+
+.barra-etiqueta {
+    overflow-wrap: anywhere;
+}
+
+.barra-valor {
+    font-weight: bold;
+}
+
+/* Riel gris y barra de color con el extremo redondeado */
+.barra-riel {
+    display: block;              /* un <span> es "en línea": sin esto no toma alto */
+    grid-column: 1 / -1;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--gris-lateral);
+}
+
+.barra-relleno {
+    display: block;
+    height: 100%;
+    min-width: 4px;
+    border-radius: 0 4px 4px 0;
+    background: var(--barra);
+}
+
+/* Mensaje de error general de un formulario */
+.mensaje-formulario {
+    margin: 0 0 14px 0;
+    padding: 10px 12px;
+    border-left: 4px solid var(--rojo);
+    background: var(--gris-lateral);
+    color: var(--rojo);
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+/* =====================================================================
+   LISTADOS: pestañas y tablas
+   ===================================================================== */
+.pestannas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 20px;
+    border-bottom: 2px solid var(--azul-menu);
+}
+
+.pestanna {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border: 1px solid var(--borde);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    background: var(--gris-lateral);
+    color: var(--texto);
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* Pestaña seleccionada: se usa el atributo aria-selected como selector */
+.pestanna[aria-selected="true"] {
+    background: var(--azul-menu);
+    border-color: var(--azul-menu);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.contador {
+    font-weight: normal;
+    font-size: 0.78rem;
+}
+
+.tabla-contenedor {
+    overflow-x: auto;            /* la tabla se desplaza, no la página */
+    margin-top: 12px;
+}
+
+.tabla {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+
+.tabla th {
+    padding: 9px 10px;
+    border-bottom: 2px solid var(--azul-titulo);
+    text-align: left;
+    color: var(--azul-titulo);
+    white-space: nowrap;
+}
+
+.tabla td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--borde);
+    vertical-align: top;
+}
+
+.tabla tbody tr:hover {
+    background: var(--gris-lateral);
+}
+
+.tabla td .etiqueta {
+    margin-top: 0;
+    margin-bottom: 3px;
+}
+
+/* =====================================================================
+   PIE DE PÁGINA
+   ===================================================================== */
+.pie {
+    padding: 18px 20px;
+    border-top: 1px solid var(--borde);
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--texto-suave);
+}
+
+/* =====================================================================
+   PANTALLAS PEQUEÑAS (celular)
+   ===================================================================== */
+@media (max-width: 760px) {
+    .contenedor {
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 20px;
+    }
+
+    .menu-lateral,
+    .contenido {
+        flex: none;
+        width: 100%;             /* sin esto, una tabla ancha ensancha toda la página */
+    }
+
+    .migas ol {
+        padding-left: 16px;
+    }
+
+    .buscador {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .buscador input {
+        width: 100%;
+    }
+
+    .grupo-doble,
+    .paneles {
+        grid-template-columns: 1fr;
+    }
+
+    .fila {
+        padding-left: 8px;
+    }
+}

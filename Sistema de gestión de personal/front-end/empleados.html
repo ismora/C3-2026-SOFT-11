@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio | Gestión de Personal</title>
+
+    <!-- Íconos: Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Estilos propios del sistema -->
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+    <!-- Permite saltar el menú con el teclado (accesibilidad) -->
+    <a href="#contenido" class="saltar">Saltar al contenido</a>
+
+    <div class="franja-superior"></div>
+
+    <!-- ===================== ENCABEZADO ===================== -->
+    <header class="encabezado">
+        <a href="index.html" class="logo">
+            <span class="logo-marca" aria-hidden="true">GP</span>
+            <span class="logo-texto">Sistema de Gestión<br>de Personal</span>
+        </a>
+
+        <div class="herramientas" role="group" aria-label="Herramientas de accesibilidad">
+            <span>Tamaño de letra:</span>
+            <button type="button" id="btnLetraMenos" class="btn-herramienta" aria-label="Disminuir el tamaño de letra">-</button>
+            <button type="button" id="btnLetraNormal" class="btn-herramienta" aria-label="Tamaño de letra normal">A</button>
+            <button type="button" id="btnLetraMas" class="btn-herramienta" aria-label="Aumentar el tamaño de letra">+</button>
+            <span class="separador-herramientas"></span>
+            <button type="button" id="btnContraste" class="btn-herramienta" aria-label="Modo oscuro" aria-pressed="false">
+                <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===================== MENÚ PRINCIPAL ===================== -->
+    <nav class="menu-principal" aria-label="Menú principal">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="empleados.html" class="activo" aria-current="true">Empleados</a></li>
+            <li><a href="certificacion-registrar.html">Certificaciones</a></li>
+            <li><a href="proyecto-registrar.html">Proyectos</a></li>
+            <li><a href="busqueda.html">Búsqueda</a></li>
+            <li><a href="listados.html">Listados</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===================== MIGAS DE PAN ===================== -->
+    <nav class="migas" aria-label="Ruta de navegación">
+        <ol>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="empleados.html">Empleados</a></li>
+            <li aria-current="page">Directorio</li>
+        </ol>
+    </nav>
+
+    <main class="contenedor" id="contenido">
+
+        <!-- ===================== MENÚ LATERAL ===================== -->
+        <aside class="menu-lateral">
+            <nav aria-label="Opciones de empleados">
+                <ul>
+                <li><a href="empleados.html" class="activo" aria-current="page">Directorio</a></li>
+                <li><a href="empleado-registrar.html">Registrar empleado</a></li>
+                <li><a href="asignar-certificacion.html">Asignar certificación</a></li>
+                <li><a href="asignar-proyecto.html">Asignar proyecto</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- ===================== CONTENIDO ===================== -->
+        <section class="contenido" aria-labelledby="tituloPagina">
+            <div class="titulo-pagina">
+                <span class="icono-circulo" aria-hidden="true"><i class="fa-solid fa-list"></i></span>
+                <div>
+                    <h1 id="tituloPagina">Empleados</h1>
+                    <p class="subtitulo">Directorio</p>
+                </div>
+
+                <!-- Buscador por nombre o correo -->
+                <form class="buscador" id="frmBuscar" role="search">
+                    <label for="txtBuscar">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <span class="solo-lector">Buscar por nombre o correo</span>
+                    </label>
+                    <input type="search" id="txtBuscar" placeholder="Buscar...">
+                </form>
+            </div>
+
+            <!-- Cantidad de resultados: "1 - 10 de 57" -->
+            <p class="resumen-lista" id="txtResumen" aria-live="polite"></p>
+
+            <!-- La lista se llena con JS a partir de los datos del servidor -->
+            <ul class="lista" id="lstEmpleados" aria-label="Lista de empleados"></ul>
+
+            <!-- Botones Anterior 1 2 3 Siguiente: también se crean con JS -->
+            <nav class="paginacion" id="navPaginacion" aria-label="Paginación"></nav>
+        </section>
+    </main>
+
+    <footer class="pie">
+        Sistema de Gestión de Personal · Proyecto integrador 1
+    </footer>
+
+    <!-- SweetAlert2: ventanas de mensaje (en lugar de alert) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Funciones comunes (dirección del API, accesibilidad, mensajes) -->
+    <script src="js/comun.js"></script>
+    <!-- Lógica de esta página -->
+    <script src="js/empleados-listar.js"></script>
+</body>
+
+</html>

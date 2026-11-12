@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        <div>
+            <label for="sltUsuario">Usuario:</label>
+            <select id="sltUsuario"></select>
+                <!-- select: Lista desplegable, será autogenerada con los datos del servidor -->
+        </div>
+
+
+        <div>
+            <label for="sltCertificacion">Certifiación:</label>
+            <select id="sltCertificacion"></select>
+        </div>
+
+        <button type="button" id="btnAsociar">Asociar</button>
+
+    </form>
+
+    <!-- SweetAlert2: ventanas de mensaje (en lugar de alert) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="js/asociar-certificacion.js"></script>
+
+</body>
+
+</html>

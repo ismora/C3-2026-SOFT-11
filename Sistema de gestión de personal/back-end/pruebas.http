@@ -1,0 +1,214 @@
+### =====================================================================
+### Pruebas de la API de gestión de personal
+### Se pueden ejecutar desde VS Code con la extensión REST Client
+### (clic en "Send Request" sobre cada petición) o copiarlas a Thunder Client / Postman.
+### Orden recomendado: certificaciones → proyectos → empleados → asignaciones → búsqueda
+### =====================================================================
+
+@url = http://localhost:3000
+
+### ---------------- CERTIFICACIONES ----------------
+
+### Registrar una certificación que no expira
+POST {{url}}/certificaciones
+Content-Type: application/json
+
+{
+  "nombre": "Scrum Master",
+  "institucion": "Scrum.org"
+}
+
+### Registrar una certificación que expira
+POST {{url}}/certificaciones
+Content-Type: application/json
+
+{
+  "nombre": "AWS Cloud Practitioner",
+  "institucion": "Amazon",
+  "vigencia": { "expira": true, "fechaExpiracion": "2027-06-25" }
+}
+
+### Error esperado (400): falta la institución
+POST {{url}}/certificaciones
+Content-Type: application/json
+
+{
+  "nombre": "React"
+}
+
+### Error esperado (400): expira pero no tiene fecha
+POST {{url}}/certificaciones
+Content-Type: application/json
+
+{
+  "nombre": "Azure Fundamentals",
+  "institucion": "Microsoft",
+  "vigencia": { "expira": true }
+}
+
+### Certificaciones para llenar un select (solo nombre e institución)
+GET {{url}}/certificaciones/opciones
+
+### Primeras 2 certificaciones registradas
+GET {{url}}/certificaciones/primeras/2
+
+### Instituciones con más certificaciones
+GET {{url}}/certificaciones/top-instituciones/3
+
+### Certificaciones que vencen en el próximo año
+GET {{url}}/certificaciones/por-vencer?dias=365
+
+
+### ---------------- PROYECTOS ----------------
+
+### Registrar un proyecto
+POST {{url}}/proyectos
+Content-Type: application/json
+
+{
+  "nombre": "Portal de matrícula",
+  "tecnologias": ["React", "Node.js", "MongoDB"],
+  "fechaInicio": "2026-02-01",
+  "estado": "En curso"
+}
+
+### Registrar otro proyecto
+POST {{url}}/proyectos
+Content-Type: application/json
+
+{
+  "nombre": "App de inventario",
+  "tecnologias": ["Angular", "Node.js", "PostgreSQL"],
+  "fechaInicio": "2025-06-15",
+  "fechaFin": "2025-12-20",
+  "estado": "Finalizado"
+}
+
+### Error esperado (400): la fecha de fin es anterior a la de inicio
+POST {{url}}/proyectos
+Content-Type: application/json
+
+{
+  "nombre": "Proyecto con fechas inválidas",
+  "tecnologias": ["Vue"],
+  "fechaInicio": "2026-05-01",
+  "fechaFin": "2026-01-01"
+}
+
+### Proyectos para llenar un select (solo nombre y estado)
+GET {{url}}/proyectos/opciones
+
+### Tecnologías registradas (sin repetir)
+GET {{url}}/proyectos/tecnologias
+
+
+### ---------------- EMPLEADOS ----------------
+
+### Registrar un empleado
+POST {{url}}/empleados
+Content-Type: application/json
+
+{
+  "nombre": "Naith",
+  "correo": "naith@empresax.net",
+  "contrasenna": "Cenfo2026!",
+  "direccion": { "provincia": "Cartago", "canton": "Central", "distrito": "Oriental" }
+}
+
+### Registrar otro empleado
+POST {{url}}/empleados
+Content-Type: application/json
+
+{
+  "nombre": "Steven",
+  "correo": "steven@empresax.net",
+  "contrasenna": "Cenfo2026!",
+  "direccion": { "provincia": "Heredia", "canton": "Central", "distrito": "Mercedes" }
+}
+
+### Error esperado (409): correo repetido
+POST {{url}}/empleados
+Content-Type: application/json
+
+{
+  "nombre": "Bryan otra vez",
+  "correo": "bryan@empresax.net",
+  "contrasenna": "Cenfo2026!",
+  "direccion": { "provincia": "Cartago", "canton": "Central", "distrito": "Oriental" }
+}
+
+### Directorio: primera página (10 empleados)
+GET {{url}}/empleados/listado
+
+### Directorio: página 2, de 5 en 5, buscando "bry"
+GET {{url}}/empleados/listado?pagina=2&limite=5&buscar=bry
+
+### Error esperado (400): la página debe ser 1 o mayor
+GET {{url}}/empleados/listado?pagina=0
+
+### Error esperado (400): límite máximo 50
+GET {{url}}/empleados/listado?limite=500
+
+### Empleados para llenar un select (solo nombre y correo)
+GET {{url}}/empleados/opciones
+
+### Asignar una certificación (reemplace el id por uno de su base de datos)
+PATCH {{url}}/empleados/bryan@empresax.net/certificaciones
+Content-Type: application/json
+
+{
+  "certificacionId": "REEMPLAZAR_POR_ID_DE_SCRUM_MASTER"
+}
+
+### Asignar un proyecto (reemplace el id por uno de su base de datos)
+PATCH {{url}}/empleados/bryan@empresax.net/proyectos
+Content-Type: application/json
+
+{
+  "proyectoId": "REEMPLAZAR_POR_ID_DEL_PORTAL_DE_MATRICULA"
+}
+
+### BÚSQUEDA (RF-05): empleados con proyectos en React y Node.js y certificación Scrum Master
+GET {{url}}/empleados/busqueda?tecnologias=react,node.js&certificaciones=scrum master
+
+### Búsqueda SOLO por tecnologías
+GET {{url}}/empleados/busqueda?tecnologias=react
+
+### Búsqueda SOLO por certificaciones
+GET {{url}}/empleados/busqueda?certificaciones=scrum master
+
+### Búsqueda sin resultados: tecnología que nadie usó
+GET {{url}}/empleados/busqueda?tecnologias=cobol&certificaciones=scrum master
+
+### Error esperado (400): no se envió ninguna tecnología ni certificación
+GET {{url}}/empleados/busqueda
+
+### Error esperado (400): id inválido
+DELETE {{url}}/empleados/123
+
+### Eliminar un empleado (reemplace el id)
+DELETE {{url}}/empleados/REEMPLAZAR_POR_ID_DE_UN_EMPLEADO
+
+
+### ---------------- ESTADÍSTICAS ----------------
+
+### Resumen para el panel principal (avisa lo que vence en 30 días)
+GET {{url}}/estadisticas/resumen
+
+### Resumen avisando lo que vence en 90 días
+GET {{url}}/estadisticas/resumen?dias=90
+
+### Error esperado (400): días debe ser mayor a 0
+GET {{url}}/estadisticas/resumen?dias=0
+
+
+### ---------------- LISTADOS COMPLETOS ----------------
+
+### Todos los empleados
+GET {{url}}/empleados
+
+### Todas las certificaciones
+GET {{url}}/certificaciones
+
+### Todos los proyectos
+GET {{url}}/proyectos
